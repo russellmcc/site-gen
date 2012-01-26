@@ -2,13 +2,14 @@
 module Main where
 
 import Prelude hiding (id, foldr, elem, sum)
-import Control.Arrow ((>>>), (***), (&&&), arr, second)
+import Control.Arrow ((>>>), (>>^), (^>>), (***), (&&&), arr, second, first)
 import Control.Category (id)
 import Data.Monoid (mempty, mconcat)
 import Control.Applicative
 import Data.Maybe
 import Data.List hiding (foldr, elem, sum)
 import Data.Foldable
+import Control.Monad
 
 import Hakyll
 
@@ -33,7 +34,7 @@ main = hakyll $ do
     create "index.html" $ constA mempty
         >>> arr (setField "title" "Home")
         >>> requireAllA "posts/*" (id *** arr (take 3 . reverse . chronological) >>> addPostList)
-        >>> requireAllA "posts/*" sortedPosts
+        >>> sortedPosts
         >>> applyTemplateCompiler "templates/index.html"
         >>> applyTemplateCompiler "templates/default.html"
         >>> relativizeUrlsCompiler
@@ -72,33 +73,34 @@ byScore = sortBy score'
           maybeScore ∷ Page String → Maybe Int
           maybeScore = fmap fst . listToMaybe . reads . getField "score"
 
-sortedPosts ∷ Compiler (Page String, [Page String]) (Page String)
-sortedPosts = setFieldA "sorted" (arr . const $ "Sorted")
+getTags = map trim . splitAll "," . getField "tags"
 
-makeAllSorted ∷ [String] → [Page String] → [Compiler Page String String]
-makeAllSorted ts posts = getZipList $ makeSortedTagList <$> ZipList ts <*> (ZipList $ postsWithTag <$> ts <*> pure posts)
-    where postsWithTag t = filter (postHasTag t)
-          postHasTag t p = t `elem` getTags p
-          getTags = map trim . splitAll "," . getField "tags"
+sortedPosts ∷ Compiler (Page String) (Page String)
+sortedPosts = id &&& constA () >>> 
+              setFieldA "sorted" tagList 
+    where tagList = requireA "tags" $
+                    arr (\(_, t) → tagsMap t) >>>
+                    mapCompiler makeSortedTagList >>>
+                    arr mconcat
 
-makeSortedTagList ∷ String → [Page String] → Compiler (Page String) String
-makeSortedTagList t posts = id &&& constA (byScore posts)
-            >>> postList' "posts" "template/postitemtaglist.html"
-            >>> arr (setField "tag" t)
-            >>> applyTemplateCompiler "template/taglistitem.html"
-            >>> arr pageBody
+makeSortedTagList ∷ Compiler (String, [Page String]) String
+makeSortedTagList = constA mempty &&& id
+            >>> arr (\(p, (t, ps)) → ((p, t), ps))
+            >>> first (setFieldA "tag" id)
+            >>> postList' "posts" "templates/postitemtaglist.html"
+            >>> applyTemplateCompiler "templates/taglistitem.html"
+            >>^ pageBody
 
 -- | Auxiliary compiler: generate a post list from a list of given posts, and
 -- add it to the current page under @$posts@
 --
 addPostList :: Compiler (Page String, [Page String]) (Page String)
 addPostList = second (arr $ reverse . chronological)
-    >>> postList' "posts" "template/postitem.html"
+    >>> postList' "posts" "templates/postitem.html"
 
 postList' field template = setFieldA field $
         require template (\p t -> map (applyTemplate t) p)
-        >>> arr mconcat
-        >>> arr pageBody
+        >>^ pageBody . mconcat
 
 makeTagList :: String
             -> [Page String]
