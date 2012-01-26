@@ -28,6 +28,13 @@ main = hakyll $ do
             >>> applyTemplateCompiler "templates/post.html"
             >>> applyTemplateCompiler "templates/default.html"
             >>> relativizeUrlsCompiler
+    
+    match "resume.md" $ do
+        route $ setExtension ".html"
+        compile $ pageCompiler
+           >>> applyTemplateCompiler "templates/resume.html"
+           >>> applyTemplateCompiler "templates/default.html"
+           >>> relativizeUrlsCompiler
 
     -- Index
     match "index.html" $ route idRoute
@@ -94,6 +101,9 @@ makeSortedTagList = constA mempty &&& id
 -- | Auxiliary compiler: generate a post list from a list of given posts, and
 -- add it to the current page under @$posts@
 --
+addPostListForTag = second (arr $ reverse . chronological) >>>
+                    postList' "posts" "templates/postitemnotag.html"
+
 addPostList :: Compiler (Page String, [Page String]) (Page String)
 addPostList = second (arr $ reverse . chronological)
     >>> postList' "posts" "templates/postitem.html"
@@ -107,8 +117,8 @@ makeTagList :: String
             -> Compiler () (Page String)
 makeTagList tag posts =
     constA (mempty, posts)
-        >>> addPostList
-        >>> arr (setField "title" ("Posts tagged &#8216;" ++ tag ++ "&#8217;"))
+        >>> addPostListForTag
+        >>> arr (setField "title" tag)
         >>> applyTemplateCompiler "templates/posts.html"
         >>> applyTemplateCompiler "templates/default.html"
         >>> relativizeUrlsCompiler
