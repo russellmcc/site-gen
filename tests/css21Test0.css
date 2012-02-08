@@ -1,0 +1,9 @@
+@charset "Bleh";
+
+@import "number 1"; <!--
+@import wrong ;
+@import "wrong"{}
+@import "number 2" right; -->
+@import "wrong" wrong wrong;
+@import "wrong" , , ;
+@import "number 3" right, right;

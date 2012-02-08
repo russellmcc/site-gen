@@ -2,3 +2,12 @@
 /site.hi
 /site.o
 _*
+/CssProcess.hers
+/CssProcess.hi
+/CssProcess.o
+/CssTokenizer.hi
+/CssTokenizer.o
+/Util.hi
+/Util.o
+/examples/syntax.less
+/tests/cssProcessTest.hers

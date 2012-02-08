@@ -1,0 +1,9 @@
+p {color: green}
+#p {color : green}
+.p {color : green}
+* {color : green}
+[bleh] {color : green}
+[bleh ~= blah] {color: green}
+:p {color : green}
+:p() {color : green}
+:p(p) {color : green}

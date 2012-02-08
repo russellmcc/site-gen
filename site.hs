@@ -4,13 +4,18 @@ module Main where
 import Prelude hiding (id, foldr, elem, sum)
 import Control.Arrow ((>>>), (>>^), (^>>), (***), (&&&), arr, second, first)
 import Control.Category (id)
-import Data.Monoid (mempty, mconcat)
+import Data.Monoid (mempty, mconcat, mappend)
 import Control.Applicative
 import Data.Maybe
 import Data.List hiding (foldr, elem, sum)
 import Data.Foldable
 import Control.Monad
-
+import CssProcess
+import CssTokenizer
+import Data.Attoparsec.Text (parseOnly)
+import Data.Text (pack)
+import qualified Data.ByteString.Lazy as LBS
+import qualified Data.ByteString.Internal as LBSI
 import Hakyll
 
 main :: IO ()
@@ -140,6 +145,13 @@ matchAll patterns comp = sequence $ match <$> patterns <*> pure comp
 
 staticCopy = matchAll staticDirs staticCopy'
     where staticCopy' = do 
-            route idRoute
-            compile copyFileCompiler
+            route $ ((matchRoute "**.scss" $ setExtension "css") `mappend` idRoute)
+            compile $ byExtension getResourceLBS
+                   [ (".scss", processCssCompiler)
+                   ]
+
+processCssCompiler = getResourceString >>> (unsafeCompiler doScss)
+    where doScss a = LBS.pack <$> ((<$>) <$> (pure LBSI.c2w) <*> (show <$> (getRight [] <$> (process $ parseOnly styleSheet $ pack a))))
+          getRight o (Left _) = o
+          getRight _ (Right i) = i
 
