@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Hacking Vertical Vinyl
-tags: lorem
+tags: Electronics
 score: 15
 ---
 
@@ -15,7 +15,7 @@ While it's seemingly quite able to play vinyl while hanging without skipping, th
 
 <img src="/images/vvinside.jpg"/>
 
-Fortunately, though, it's quite easy to add this functionality yourself, at home.  The back is cardboard in the classic consumer audio equipment tradition, and comes off easily with a few screws.  Inside you'll find a sparse, minimalist collection of components - a 12V DC motor driving the belt, along with a small board containing some analog components.
+Luckily, it's quite easy to add this functionality yourself.  The back is cardboard in the classic consumer audio equipment tradition, and comes off easily with a few screws.  Inside you'll find a sparse, minimalist collection of components - a 12V DC motor driving the belt, along with a small board containing some analog components.
 
 Adding a line out is as simple as cutting the wires to the speakers and soldering them to phono jacks.  
 
