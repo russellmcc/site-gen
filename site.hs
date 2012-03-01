@@ -105,7 +105,7 @@ makeSortedTagList ∷ Compiler (String, [Page String]) String
 makeSortedTagList = constA mempty &&& id
             >>> arr (\(p, (t, ps)) → ((p, t), ps))
             >>> first (setFieldA "tag" id)
-            >>> postList' "posts" "templates/postitemtaglist.html"
+            >>> postList' "posts" "templates/postitem.html"
             >>> applyTemplateCompiler "templates/taglistitem.html"
             >>^ pageBody
 
@@ -113,7 +113,7 @@ makeSortedTagList = constA mempty &&& id
 -- add it to the current page under @$posts@
 --
 addPostListForTag = second (arr $ reverse . chronological) >>>
-                    postList' "posts" "templates/postitemnotag.html"
+                    postList' "posts" "templates/postitem.html"
 
 addPostList :: Compiler (Page String, [Page String]) (Page String)
 addPostList = second (arr $ reverse . chronological)

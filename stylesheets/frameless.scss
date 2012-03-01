@@ -106,7 +106,7 @@ body {
 }
 
 #content {
-    width: 650px;
+    width: 690px;
     position: absolute;
     z-index: 20;
     top: 75px; 
@@ -142,6 +142,7 @@ body {
 .postpreview {
     background-color: rgba(0, 0, 0, .32);
     padding: 20px;
+    margin-bottom: 30px;
 }
 
 @mixin preview {
@@ -177,19 +178,22 @@ body {
     line-height: 180%;
 }
 
-.postpreview p{
+.previewtext{
     @include previewtext;
-    float: left;
+    width: 630px - 255px;
 }
 
 .postpreview img {
     width: 255px;
     height: 160px;
     float: right;
-    display: inline;
 }
 
 .readmore {
-    @include previewtext;
+    @include headfont;
+    color: $sexyred;
     clear: both;
+    display: block;
+    text-decoration: underline;
+    margin-top: 40px;
 }
