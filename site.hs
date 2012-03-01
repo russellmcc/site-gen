@@ -40,6 +40,12 @@ main = hakyll $ do
            >>> applyTemplateCompiler "templates/resume.html"
            >>> applyTemplateCompiler "templates/default.html"
            >>> relativizeUrlsCompiler
+               
+    match "about.md" $ do
+        route $ setExtension ".html"
+        compile $ pageCompiler
+           >>> applyTemplateCompiler "templates/default.html"
+           >>> relativizeUrlsCompiler
 
     -- Index
     match "index.html" $ route idRoute

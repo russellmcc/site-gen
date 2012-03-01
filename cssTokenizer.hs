@@ -125,6 +125,7 @@ instance Show CssToken where
     show (CssDollarKeyword s) = ('$' : s )
     show CssSemiColon = ";\n"
     showList ((CssIdent a):as) = mappend (mappend $ a ++ " ") (showList as)
+    showList ((CssHash a):as) = mappend (mappend $ "#" ++ a ++ " ") (showList as)
     showList (a:as) = mappend (shows a) (showList as)
     showList [] = id
 -- sequence under an applicative

@@ -9,7 +9,9 @@
 //
 
 // color
-$sexyred: rgb(255,0,0);
+$sexyred: rgb(211, 41, 67);
+$yellow: rgb(244, 196, 144);
+$pink: rgb(255, 189, 199);
 
 // These two together form a fixed vertical grid.  in particular, the 
 // sub-headings are snapped vertically to a baseline.
@@ -31,6 +33,10 @@ $section-padding: $line-height * 2em;
 //
 // Column-widths in a function, in ems
 //
+
+@mixin headfont {
+    font-family: "Ubuntu Condensed";
+}
 
 @mixin width($cols) {
 	width: ($cols * ($column + $gutter) - $gutter) / $font-size * 1em;
@@ -78,11 +84,112 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
     color:inherit;
 }
 
-.contact {
-    color: $sexyred;
-    font-family: "Ubuntu Condensed";
+body {
+    background-color: #333;
 }
 
-.contact h1 {
-    font-size: 4em;
+#contact {
+    color: $sexyred;
+    @include headfont;
+    font-size: 14px;
+}
+
+#contact h1 {
+    font-size: 4.28em;
+}
+
+#contact {
+    position: fixed;
+    bottom: 35px;
+    left: 15px;
+    z-index: 10; 
+}
+
+#content {
+    width: 650px;
+    position: absolute;
+    z-index: 20;
+    top: 75px; 
+    right: 75px;
+}
+
+#navbar {
+    color: $yellow;
+    @include headfont;
+    font-size: 1.5em;
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+#navbar ul {
+    list-style-type: none;
+}
+
+.whitesquare  {
+    margin-left: 10px;
+    display: inline-block;
+    min-height: 22px;
+    min-width: 13px;
+    background-color: #FFF;
+}
+
+#navbar li {
+    display: inline;
+    padding-left: 25px;
+    text-transform: lowercase;
+}
+
+.postpreview {
+    background-color: rgba(0, 0, 0, .32);
+    padding: 20px;
+}
+
+@mixin preview {
+    @include headfont;
+    color: $sexyred;
+    text-transform: lowercase;
+}
+
+.postpreview h2 {
+    @include preview;
+    font-size: 1.5em;
+    margin-bottom: 4px;
+}
+
+.postpreview h3 {
+    @include preview;
+    font-size: 1em;
+}
+
+.postpreview hr {
+    height: 1px;
+    background-color: rgba(255,189,199, .22);
+    border-style: none;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+@mixin previewtext {
+    color: $pink;
+    font-family: "Open Sans";
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 180%;
+}
+
+.postpreview p{
+    @include previewtext;
+    float: left;
+}
+
+.postpreview img {
+    width: 255px;
+    height: 160px;
+    float: right;
+    display: inline;
+}
+
+.readmore {
+    @include previewtext;
+    clear: both;
 }
