@@ -3,8 +3,6 @@ layout: resume
 title: Resume
 ---
 
-#Russell McClellan
-
 ## Work Experience
 
 <dl><dt>2009-2012</dt><dd>Software Developer, Mark of the Unicorn, Cambridge, Massachusetts</dd></dl>
@@ -25,12 +23,21 @@ Contributed meaningfully to several products, including creating the database ba
 
 Administrated, expanded and maintained my dormitory's web servers and printers
 
+----------------
+
 ## Education
 
 <dl><dt>2009</dt><dd>B.S. in Computer Science, California Institute of Technology, Pasadena, California. GPA 4.0+</dd></dl>
 
+-----------------
+
 ## Technical Skills
 
- * Programming languages - I'm best at C++, JavaScript (CoffeeScript), and Haskell.  I am comfortable debugging x86/amd64 assembly.
- * Basics of digital embedded system design.  I've wire-wrapped and programmed firmware for a complete 80188-based computer and I've worked with DSP56K chips.
- * Basic knowledge of DSP algorithms, especially for audio effects.
+ * Programming languages - I'm best at C/C++, JavaScript (CoffeeScript), and Haskell.  I am comfortable debugging x86/amd64 at the assembly level.
+ * Basics of digital embedded system design -  I designed and wire-wrapped two complete embedded systems in college.
+ * Embedded programming - I've written firmware in C and assembly for DSP56K, AVR, ARM, and x86 chips.
+ * DSP algorithms - especially audio effects and music synthesis.
+
+-------------------
+
+## [PDF Version](resume-russell-mcclellan.pdf)

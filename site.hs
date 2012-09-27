@@ -145,7 +145,7 @@ feedConfiguration = FeedConfiguration
 renderScore p = setField "cScore" score p
     where score = getField "score" p
 
-staticDirs = [ "stylesheets/*", "images/*", "resume.pdf" ]
+staticDirs = [ "stylesheets/*", "images/*", "resume-russell-mcclellan.pdf" ]
 
 matchAll patterns comp = sequence $ match <$> patterns <*> pure comp
 

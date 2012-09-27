@@ -16,7 +16,7 @@ $pink: rgb(255, 189, 199);
 // These two together form a fixed vertical grid.  in particular, the 
 // sub-headings are snapped vertically to a baseline.
 
-$font-size: 16; 		// Your base font-size in pixels
+$font-size: 16; 		
 $line-height: 1.7;
 
 // minimum leading for subheadings on top and bottom
@@ -39,15 +39,15 @@ $section-padding: $line-height * 2em;
 }
 
 @mixin width($cols) {
-	width: ($cols * ($column + $gutter) - $gutter) / $font-size * 1em;
+	width: ($cols * ($column + $gutter) - $gutter) / $font-size * 1rem;
 }
 
 @mixin padding-left($cols) {
-    padding-left: ($cols * ($column + $gutter)) / $font-size * 1em;
+    padding-left: ($cols * ($column + $gutter)) / $font-size * 1rem;
 }
 
 @mixin margin-left($cols) {
-    margin-left: ($cols * ($column + $gutter)) / $font-size * 1em;
+    margin-left: ($cols * ($column + $gutter)) / $font-size * 1rem;
 }
 
 @mixin rounded-corners($radius) {
@@ -84,25 +84,25 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
     color:inherit;
 }
 
+/* set the "root-em" units. */
+html { font-size: $font-size * 1px }
+
 body {
-    background-color: #333;
+    background-image: url("/images/bg.png");
+    background-attachment: fixed;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    background-color: #303030;
 }
 
 #contact {
     color: $sexyred;
     @include headfont;
-    font-size: 14px;
+    font-size: 0.8rem;
 }
 
 #contact h1 {
-    font-size: 4.28em;
-}
-
-#contact {
-    position: fixed;
-    bottom: 35px;
-    left: 15px;
-    z-index: 10; 
+    font-size: 4.28rem;
 }
 
 #content {
@@ -116,7 +116,7 @@ body {
 #navbar {
     color: $yellow;
     @include headfont;
-    font-size: 1.5em;
+    font-size: 1.5rem;
     text-align: right;
     margin-bottom: 20px;
 }
@@ -139,7 +139,7 @@ body {
     text-transform: lowercase;
 }
 
-.postpreview {
+.post, .postpreview, .resume {
     background-color: rgba(0, 0, 0, .32);
     padding: 20px;
     margin-bottom: 30px;
@@ -151,18 +151,42 @@ body {
     text-transform: lowercase;
 }
 
-.postpreview h2 {
+.resume h1 {
     @include preview;
-    font-size: 1.5em;
+    font-size: 2rem;
+    margin-bottom: .3rem;
+}
+
+.postpreview h2,
+.post h2,
+.resume h2 {
+    @include preview;
+    font-size: 1.5rem;
     margin-bottom: 4px;
 }
 
-.postpreview h3 {
+.postpreview h3,
+.post h3,
+.resume h3,
+.resume dt {
     @include preview;
-    font-size: 1em;
+    font-size: 1rem;
 }
 
-.postpreview hr {
+.resume dt {
+    @include preview;
+    font-size: 1rem;
+}
+
+.resume dd {
+    @include preview;
+    font-size: 1rem;
+    display: block;
+}
+
+.postpreview hr,
+.post hr,
+.resume hr {
     height: 1px;
     background-color: rgba(255,189,199, .22);
     border-style: none;
@@ -170,7 +194,11 @@ body {
     margin-bottom: 20px;
 }
 
-@mixin previewtext {
+.resume hr {
+    margin-top: 1rem;
+}
+
+@mixin posttext {
     color: $pink;
     font-family: "Open Sans";
     font-weight: 300;
@@ -178,9 +206,28 @@ body {
     line-height: 180%;
 }
 
-.previewtext{
-    @include previewtext;
+.previewtext {
+    @include posttext;
     width: 630px - 255px;
+}
+
+.post p
+{
+    @include posttext;
+    margin-top: 1rem;
+}
+
+.resume p
+{
+    @include posttext;
+    margin-bottom: 1rem;
+    line-height: 140%;
+    margin-left: 2rem;
+}
+
+.resume li {
+    @include posttext;
+    margin-left: 2rem;
 }
 
 .postpreview img {

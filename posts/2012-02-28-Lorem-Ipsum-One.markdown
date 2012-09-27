@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Lorem Ipsum 1
-tags: electronics
+tags: projects
 score: 12
 teaser: It's just mind-blowingly awesome. I apologize, and I wish I was more articulate, but it's hard to be articulate when your mind's blown but in a very good way.
 img: /images/bbsamp.jpg
