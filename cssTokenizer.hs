@@ -10,7 +10,7 @@ module CssTokenizer (
                      RuleElem (..),
                      styleSheet
                     ) where
-import Prelude hiding (takeWhile, take, all)
+import Prelude hiding (takeWhile, take, all, elem)
 import Data.Text hiding (tail, takeWhile, take, count, reverse, head, empty, all)
 import Util
 import Data.Attoparsec.Text
@@ -103,6 +103,10 @@ showNum = showPropFrac . properFraction
                                           True -> show b
                                           False -> show a ++ (tail $ show b)
 
+noSpaces = [CssColon]
+identSuffix x = case x `elem` noSpaces of
+                   True → ""
+                   False → " "
 
 instance Show CssToken where
     show (CssIdent s) = s
@@ -124,8 +128,8 @@ instance Show CssToken where
     show (CssAtKeyword s) = ('@' : s)
     show (CssDollarKeyword s) = ('$' : s )
     show CssSemiColon = ";\n"
-    showList ((CssIdent a):as) = mappend (mappend $ a ++ " ") (showList as)
-    showList ((CssHash a):as) = mappend (mappend $ "#" ++ a ++ " ") (showList as)
+    showList ((CssIdent a):b:as) = mappend (mappend $ a ++ (identSuffix b) ++ (show b)) (showList as)
+    showList ((CssHash a):b:as) = mappend (mappend $ "#" ++ a ++ (identSuffix b) ++ (show b)) (showList as)
     showList (a:as) = mappend (shows a) (showList as)
     showList [] = id
 -- sequence under an applicative

@@ -3,41 +3,57 @@ layout: resume
 title: Resume
 ---
 
+<div class="resume-section">
+
+## Profile
+
+I am a professional software developer and amateur electronics tinkerer interested in synthesizers, programming languages and other technologies for creative expression. 
+
+</div>
+
+<div class = "resume-section">
+
+## Technical Skills
+
+ * Programming languages - C/C++, JavaScript (CoffeeScript), and Haskell
+ * Debugging computer software at the x86/amd64 assembly level
+ * Digital embedded system design
+ * Embedded programming - C, DSP56K, AVR, ARM, and x86 assembly
+ * DSP algorithms - especially audio effects and music synthesis
+
+</div>
+
+<div class="resume-section">
 ## Work Experience
 
-<dl><dt>2009-2012</dt><dd>Software Developer, Mark of the Unicorn, Cambridge, Massachusetts</dd></dl>
+<dl><dt>2009-2012</dt><dd>Software Developer<br/> Mark of the Unicorn</br> Cambridge</br> Massachusetts</dd></dl>
 
-Developed and maintained large software projects (2M+ lines) for musicians in C++
+ * Created and expanded tools for musicians on Mac and Windows using C++.
+ * Interfaced Digital Performer with MOTU video hardware to create sample-accurate video audio sync.
 
-<dl><dt>2008</dt><dd>Software Intern, Line 6, Calabasas, California</dd></dl>
+<dl><dt>2008</dt><dd>Software Intern<br/> Line 6<br/> Calabasas </br> California</dd></dl>
 
-Contributed meaningfully to several products, including creating the database back-end of a portable sound recorder in C, and experimenting with guitar processing on embedded platforms in ARM assembly
+ * Developed embedded C code for a portable sound recorder
+ * Used ARM assembly to explore guitar processing on portable devices
+ 
 
-<dl><dt>2006-2009</dt><dd>Teaching Assistant, Caltech, Pasadena, California</dd></dl>
+<dl><dt>2006-2009</dt><dd>Teaching Assistant<br/> Caltech<br/> Pasadena<br/> California</dd></dl>
  
  * CS 2. Introduction to Programming Methods - An introductory CS class in Java
  * CS 171. Introduction to Computer Graphics - C++ graphics with and without APIs
  * CS 101 Special Topics in Computer Science - General Purpose GPU Programming
+</div>
 
-<dl><dt>2006-2009</dt><dd>IMSS House Representative, Caltech, Pasadena, California</dd></dl>
-
-Administrated, expanded and maintained my dormitory's web servers and printers
-
-----------------
+<div class = "resume-section">
 
 ## Education
 
-<dl><dt>2009</dt><dd>B.S. in Computer Science, California Institute of Technology, Pasadena, California. GPA 4.0+</dd></dl>
+<dl><dt>2009</dt><dd>B.S. in Computer Science<br/> Caltech<br/> Pasadena<br/> California<br/> GPA 4.0+</dd></dl>
 
------------------
+</div>
+<div class = "resume-section">
+<div class = "pdflink">
+## [pdf resume](resume-russell-mcclellan.pdf)
+</div>
+</div>
 
-## Technical Skills
-
- * Programming languages - I'm best at C/C++, JavaScript (CoffeeScript), and Haskell.  I am comfortable debugging x86/amd64 at the assembly level.
- * Basics of digital embedded system design -  I designed and wire-wrapped two complete embedded systems in college.
- * Embedded programming - I've written firmware in C and assembly for DSP56K, AVR, ARM, and x86 chips.
- * DSP algorithms - especially audio effects and music synthesis.
-
--------------------
-
-## [PDF Version](resume-russell-mcclellan.pdf)

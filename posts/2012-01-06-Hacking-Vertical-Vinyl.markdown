@@ -3,12 +3,10 @@ layout: post
 title: Hacking Vertical Vinyl
 tags: blog
 score: 15
-teaser: First, I believe that this nation should commit itself to achieving the goal, before this decade is out, of landing a man on the moon and returning him safely to the earth. No single space project in this period will be more impressive to mankind, or more important for the long-range exploration of space; and none will be so difficult or expensive to accomplish.
-img: /images/bbsamp.jpg
+teaser: Notes on adding a phono jack to the ion vertical vinyl.
+img: /images/vvinside.jpg
 imgalt: caption?
 ---
-
-# Hacking Vertical Vinyl
 
 As a christmas present, I received an Ion Vertical Vinyl record player.  It's a very light, wall mountable record player.  It includes a pair of built-in speakers and is battery powered so that no unsightly wires need to be attached.
 

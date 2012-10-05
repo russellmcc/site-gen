@@ -44,6 +44,7 @@ main = hakyll $ do
     match "about.md" $ do
         route $ setExtension ".html"
         compile $ pageCompiler
+           >>> applyTemplateCompiler "templates/resume.html"
            >>> applyTemplateCompiler "templates/default.html"
            >>> relativizeUrlsCompiler
 

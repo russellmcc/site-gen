@@ -16,7 +16,7 @@ $pink: rgb(255, 189, 199);
 // These two together form a fixed vertical grid.  in particular, the 
 // sub-headings are snapped vertically to a baseline.
 
-$font-size: 16; 		
+$font-size: 20; 		
 $line-height: 1.7;
 
 // minimum leading for subheadings on top and bottom
@@ -27,7 +27,6 @@ $column: 48;	// The column-width of your grid in pixels
 $gutter: 24;	// The gutter-width of your grid in pixels
 
 $lambda: $line-height*$font-size;
-
 $section-padding: $line-height * 2em;
 
 //
@@ -46,8 +45,16 @@ $section-padding: $line-height * 2em;
     padding-left: ($cols * ($column + $gutter)) / $font-size * 1rem;
 }
 
+@mixin padding-right($cols) {
+    padding-right: ($cols * ($column + $gutter)) / $font-size * 1rem;
+}
+
 @mixin margin-left($cols) {
     margin-left: ($cols * ($column + $gutter)) / $font-size * 1rem;
+}
+
+@mixin margin-right($cols) {
+    margin-right: ($cols * ($column + $gutter)) / $font-size * 1rem;
 }
 
 @mixin rounded-corners($radius) {
@@ -84,8 +91,10 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
     color:inherit;
 }
 
-/* set the "root-em" units. */
-html { font-size: $font-size * 1px }
+/* set the "root-em" rem units. */
+html { 
+    font-size: $font-size * 1px;
+ }
 
 body {
     background-image: url("/images/bg.png");
@@ -98,51 +107,65 @@ body {
 #contact {
     color: $sexyred;
     @include headfont;
-    font-size: 0.8rem;
+    font-size: .8rem;
+    @include width(4);
+    margin: 0 auto;
+    text-align: right;
+    z-index: -1;
 }
 
 #contact h1 {
-    font-size: 4.28rem;
+    font-size: 3rem;
+    text-align: left;
+    line-height: 1em;
+    padding-bottom: .3em;
 }
 
 #content {
-    width: 690px;
-    position: absolute;
-    z-index: 20;
-    top: 75px; 
-    right: 75px;
+    @include width(4);
+    margin: 0 auto;
 }
 
 #navbar {
     color: $yellow;
     @include headfont;
-    font-size: 1.5rem;
-    text-align: right;
-    margin-bottom: 20px;
+    font-size: 1rem;
+    text-align: justify;
+    margin-top: 1em;
+    line-height: 0em;
 }
 
 #navbar ul {
+    line-height: 1rem;
     list-style-type: none;
 }
 
 .whitesquare  {
-    margin-left: 10px;
+    margin-left: .2em;
     display: inline-block;
-    min-height: 22px;
-    min-width: 13px;
+    min-height: 1em;
+    min-width: .5em;
     background-color: #FFF;
 }
 
 #navbar li {
     display: inline;
-    padding-left: 25px;
+    margin-left: 0em;
     text-transform: lowercase;
 }
 
-.post, .postpreview, .resume {
-    background-color: rgba(0, 0, 0, .32);
-    padding: 20px;
-    margin-bottom: 30px;
+#navbar ul:after {
+    width: 100%;
+    display: inline-block;
+    height: 0;
+    content: '';
+}
+
+.post, .postpreview, .resume-section, .about-section {
+    background-image: url("/images/divbg.png");
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom:1rem;
 }
 
 @mixin preview {
@@ -151,10 +174,12 @@ body {
     text-transform: lowercase;
 }
 
+.post h1,
 .resume h1 {
     @include preview;
     font-size: 2rem;
     margin-bottom: .3rem;
+    margin-left: .3rem;
 }
 
 .postpreview h2,
@@ -162,7 +187,11 @@ body {
 .resume h2 {
     @include preview;
     font-size: 1.5rem;
-    margin-bottom: 4px;
+    text-align: center;
+    padding: 0 .2rem;
+    padding-top: 1rem;
+    margin-top: .3rem;
+    margin-bottom: .3rem;
 }
 
 .postpreview h3,
@@ -170,77 +199,302 @@ body {
 .resume h3,
 .resume dt {
     @include preview;
+    margin-left: .2rem;
     font-size: 1rem;
 }
 
+.about-section dl {
+    line-height: 2em;
+}
+
 .resume dt {
-    @include preview;
-    font-size: 1rem;
+    float: left;
+    padding-left: .3rem;
+    @include width(1);
 }
 
 .resume dd {
     @include preview;
     font-size: 1rem;
-    display: block;
+    @include width(3);
+    @include margin-left(1);
+}
+
+.about-section dt {
+    @include width(2);
+}
+
+.resume dl:after {
+    content: '';
+    clear: both;
 }
 
 .postpreview hr,
-.post hr,
-.resume hr {
+.post hr
+{
     height: 1px;
     background-color: rgba(255,189,199, .22);
     border-style: none;
-    margin-top: 15px;
-    margin-bottom: 20px;
-}
-
-.resume hr {
     margin-top: 1rem;
+    margin-bottom: 1rem;
+    clear: both;
 }
 
 @mixin posttext {
     color: $pink;
     font-family: "Open Sans";
     font-weight: 300;
-    font-size: 14px;
+    font-size: .8rem;
     line-height: 180%;
+    text-align: left;
 }
 
 .previewtext {
     @include posttext;
-    width: 630px - 255px;
+    width: 95%;
+    padding: 0 2.5%;
 }
 
-.post p
+.previewtext:after {
+    @include clear-after;
+}
+
+.post p,
+.post ul,
+.post dt,
+.post dd
 {
     @include posttext;
+    width: 95%;;
+    margin-top: 1rem;
+    padding: 0 2.5%;
+}
+
+.post a,
+.previewtext a
+{
+    @include posttext;
+    color: $sexyred;
+}
+
+.resume p, .resume li
+{
+    @include posttext;
+    margin:1rem .3rem;
+    margin-bottom: 2rem;
+    line-height: 140%;
     margin-top: 1rem;
 }
 
-.resume p
-{
-    @include posttext;
-    margin-bottom: 1rem;
-    line-height: 140%;
-    margin-left: 2rem;
+.about-section img {
+    display: block;
+    margin: 1em auto;
+    @include width(3);
+}
+
+.resume p {
+    margin: 0 1em;
+    line-height: 1.6em;
 }
 
 .resume li {
-    @include posttext;
-    margin-left: 2rem;
+    margin-left: 1rem;
+    margin-bottom: .8rem;
+}
+
+.resume ul {
+    list-style-type: none;
+    margin-bottom: .8rem;
+}
+
+.resume a {
+   text-decoration: underline;
+}
+
+.resume .pdflink {
+    @include margin-left(1);
 }
 
 .postpreview img {
-    width: 255px;
-    height: 160px;
-    float: right;
+    @include width(3);
+    margin: 1em auto;
+    display: block;
+}
+
+.post img {
+    @include width(3);
+    margin: 1em auto;
+    display: block;
 }
 
 .readmore {
+    clear: both;
     @include headfont;
     color: $sexyred;
-    clear: both;
-    display: block;
     text-decoration: underline;
-    margin-top: 40px;
+    margin-top: 2em;
+    @include margin-left(1);
+}
+
+/* 6-column */
+@media (min-width: 30em) {
+
+    #content {
+        @include width(6);
+    }
+
+    #contact {
+        @include width(6);
+    }
+    
+    .resume dt {
+        @include width(2);
+    }
+    .resume dd {
+        @include margin-left(2);
+    }
+    
+    .about-section dd {
+        @include padding-left(1);
+    }
+
+    .about-section h3,
+    .post h3,
+    .postpreview h3 {
+        @include padding-left(1);
+    }
+
+    .about-section img,
+    .postpreview img {
+        margin: 1em 0;
+        @include width(4);
+        @include padding-left(1);
+    }
+
+    .post img {
+        @include width(4);
+    }
+}
+
+/* 8-column */
+@media (min-width: 37em) {
+    #content {
+        @include width(8);
+    }
+    
+    #contact {
+        @include width(6);
+        @include padding-left(2);
+    }
+
+    #contact h1 {
+        text-align: right;
+    }
+
+    #navbar {
+        @include width(5);
+        @include margin-left(3);
+    }
+    
+    .post h2,
+    .postpreview h2,
+    .resume h2 {
+        text-align: left;
+        padding: 0rem .3rem;
+        padding-top: 1rem;
+    }
+    
+    .post dt {
+        float: left;
+        @include width(1.8);
+        padding-left: .5em;
+        padding-right: .5em;
+        clear: both;
+    }
+    .post dd {
+        float: right;
+        padding-bottom: 1rem;
+        padding-top: 0;
+        margin-top: 0;
+        @include width(5.5);
+    }
+
+    .post dl:after {
+        @include clear-after;
+    }
+
+    .previewtext {
+        padding: 0 0;
+        margin: 0 .5rem;
+    }
+
+    .resume dt {
+        @include margin-left(1);
+    }
+    .resume dd {
+        @include margin-left(3);
+    }
+
+    .postpreview img {
+        padding: 0 0;
+        margin: 0 0;
+        @include width(4);
+        @include padding-right(1);
+        padding-left: ($gutter / $font-size) * 1rem;
+        float: right;
+        display: inline-block;
+    }
+    .about-section dt {
+        @include margin-left(1);
+    }
+}
+
+/* 12-column */
+@media (min-width: 57em) {
+    #contact {
+        @include width(4);
+        padding: 0 0;
+        margin: 0 auto;
+        position: fixed;
+        bottom: 5%;
+        right: 50%;
+        @include padding-right(2);
+    }
+    #contact h1 {
+        font-size: 2.5em;
+        text-align: right;
+    }
+    #content {
+        @include padding-left(4);
+        @include width(8);
+    }
+    #navbar li {
+        display: inline;
+    }
+}
+
+/* 15-column */
+@media (min-width: 68em) {
+    #content {
+        @include padding-right(3);
+    }
+    #contact {
+        @include padding-right(4);
+    }
+    #navbar {
+        @include width(2);
+        position: fixed;
+        @include margin-left(8);
+        text-align: right;
+    }
+    #navbar ul {
+        line-height:1rem;
+    }
+    #navbar li {
+        @include width(2);
+        display:list-item;
+    }
+    #navbar ul:after {
+        display: inline;
+    }
 }
