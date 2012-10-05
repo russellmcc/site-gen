@@ -3,7 +3,7 @@ layout: post
 title: This Website
 tags: portfolio
 score: 12
-teaser: This website is auto-generated from <a href="http://daringfireball.net/projects/markdown/">markdown</a> code using Haskell.  I wrote a custom CSS processor to output modern, reactive CSS.
+teaser: I auto-generate this site from <a href="http://daringfireball.net/projects/markdown/">markdown</a> code using Haskell.  The generation code includes a custom CSS processor to output modern, reactive CSS.
 img: /images/code_hs.png
 imgalt: Haskell code in Emacs.
 ---
