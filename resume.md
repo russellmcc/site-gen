@@ -48,7 +48,7 @@ I am a professional software developer and amateur electronics tinkerer interest
 
 ## Education
 
-<dl><dt>2009</dt><dd>B.S. in Computer Science<br/> Caltech<br/> Pasadena<br/> California<br/> GPA 4.0+</dd></dl>
+<dl><dt>2009</dt><dd>B.S. in Computer Science<br/> Caltech<br/> Pasadena<br/> California<br/></dd></dl>
 
 </div>
 <div class = "resume-section">
