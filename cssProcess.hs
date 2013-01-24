@@ -38,7 +38,7 @@ putState' a = TryParse $ (P.putState a)
 
 buildExpressionParser' table term = TryParse $ E.buildExpressionParser table $ getTryParse term
 
-many' a = TryParse $ (P.many . getTryParse) a
+many'' a = TryParse $ (P.many . getTryParse) a
 sepByT a b = TryParse $ (P.sepBy (getTryParse a) (getTryParse b))
 many1' a = TryParse $ (P.many1 . getTryParse) a
 
@@ -136,7 +136,7 @@ evalValues s vs = eval (expand s vs)
 
       -- expands all the variables in the expression
       expand s vs = runSubParser expandP s vs vs
-      expandP = (|asum (many' procVal)|)
+      expandP = (|asum (many'' procVal)|)
       procVal = replaceDollar <|> skip
       replaceDollar = getState' >>= \s → (cssTok $ checkDollar s)
       lookupDVal d s = (pDollarLookup d s) >>= pure
@@ -208,7 +208,7 @@ stateUpdate t = do
 procRuleElems ∷ ProcessState → [RuleElem] → (ProcessState, [RuleElem])
 procRuleElems p rs = runSubParser parser p (p, rs) rs
     where 
-      parser = (|swap (| (,) (|asum (many' ruleStep)|) getState'|)|)
+      parser = (|swap (| (,) (|asum (many'' ruleStep)|) getState'|)|)
       ruleStep = doInclude <|> doDecl <|> eatDollarDecl <|> skip
       doDecl = getState' >>= (cssTok . checkDecl)
       checkDecl s (RuleDecl (Declaration d)) = (|(|(RuleDecl . Declaration) (processDecl s d)|)|)
@@ -224,7 +224,7 @@ procRuleElems p rs = runSubParser parser p (p, rs) rs
 procAtRuleElems ∷ ProcessState → [AtRuleElem] → (ProcessState, [AtRuleElem])
 procAtRuleElems p rs = runSubParser parser p (p, rs) rs
     where
-      parser = (|swap (| (,) (|asum (many' ruleStep)|) getState'|)|)
+      parser = (|swap (| (,) (|asum (many'' ruleStep)|) getState'|)|)
       ruleStep = doInclude <|> doRule <|> doRuleElem <|> skip
       doRuleElem = (|(<$>) ~AtRuleRuleElem (stateUpdate (cssTok . checkRuleElem))|)
       checkRuleElem s (AtRuleRuleElem r) = (|(procRuleElems s [r])|)
@@ -242,7 +242,7 @@ processAtRule s r = r
 
 -- top-level processor.
 processP ∷ Processor [StyleSheetElem] [StyleSheetElem] IO
-processP = (|asum (many' stepP)|)
+processP = (|asum (many'' stepP)|)
     where 
       stepP = eatDollarDecl <|> eatMixin <|> doRule <|> doAtRule <|> skip
       doRule = getState' >>= (cssTok . checkRule)
