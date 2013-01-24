@@ -52,7 +52,7 @@ main = hakyll $ do
     match "index.html" $ route idRoute
     create "index.html" $ constA mempty
         >>> arr (setField "title" "Home")
-        >>> requireAllA "posts/*" (id *** arr (take 3 . reverse . chronological) >>> addPostList)
+        >>> requireAllA "posts/*" (id *** arr (take 3 . reverse . byScore) >>> addPostList)
         >>> sortedPosts
         >>> applyTemplateCompiler "templates/index.html"
         >>> applyTemplateCompiler "templates/default.html"
@@ -117,8 +117,7 @@ addPostListForTag = second (arr $ reverse . chronological) >>>
                     postList' "posts" "templates/postitem.html"
 
 addPostList :: Compiler (Page String, [Page String]) (Page String)
-addPostList = second (arr $ reverse . chronological)
-    >>> postList' "posts" "templates/postitem.html"
+addPostList = postList' "posts" "templates/postitem.html"
 
 postList' field template = setFieldA field $
         require template (\p t -> map (applyTemplate t) p)
