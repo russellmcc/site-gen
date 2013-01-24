@@ -1,8 +1,8 @@
 ---
 layout: post
-title: This Website
-tags: portfolio
-score: 12
+title: Project Log: This Website
+tags: blog
+score: 1
 teaser: I auto-generate this site from <a href="http://daringfireball.net/projects/markdown/">markdown</a> code using Haskell.  The generation code includes a custom CSS processor to output modern, reactive CSS.
 img: /images/code_hs.png
 imgalt: Haskell code in Emacs.
@@ -26,7 +26,7 @@ If you're interested in how it works, most of the guts are in four short files:
 ------------
 
 <dt>[cssTokenizer.hs](https://github.com/russellmcc/site-gen/blob/master/cssTokenizer.hs) and [cssProcess.hs](https://github.com/russellmcc/site-gen/blob/master/cssProcess.hs)</dt>
-<dd> contain the custom CSS processor used to style the site.  The style of these two files more closely matches the way I like to write Haskell.  I prefer applicatives to arrows or monads whenever possible. </dd>
+<dd> contain the custom CSS processor used to style the site.  Since these files don't make any reference to the Hakyll framework, I was more free to write in a style I prefer: applicatives over arrows and monads whenever possible. I wrote the first version of this file using [SHE](https://personal.cis.strath.ac.uk/conor.mcbride/pub/she/), but the idiom brackets eventually got too idiotic for me.</dd>
 
 ------------
 
@@ -39,4 +39,4 @@ If you're interested in how it works, most of the guts are in four short files:
 
 ## Design
 
-Most of the initial design concept was done by my friend [Kate Lindsay](http://www.kate-lindsay.com), although due to time constraints I had to finalize the design and do the mobile layout.  I'm still very much in the early stages of learning about what works and what doesn't, so I'd appreciate any feedback or hints.
+Most of the initial design concept was done by my friend [Kate Lindsay](http://www.kate-lindsay.com), although due to time constraints I had to finalize the design and do the mobile layout.  Clearly, I'm not much of a designer :-).
