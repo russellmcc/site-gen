@@ -1,0 +1,11 @@
+name:           russellSite
+version:        0.0
+synopsis:       my website
+author:         Russell McClellan
+license:        BSD3
+build-type:     Simple
+cabal-version:  >= 1.2
+
+executable site
+  build-depends:  base, bytestring, text, attoparsec, parsec, transformers, containers, hakyll < 4
+  main-is:        Site.hs
