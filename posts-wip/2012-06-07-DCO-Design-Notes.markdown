@@ -25,3 +25,5 @@ We've chosen an RC time constant of .02 seconds, implemented by a .1uF capacitor
 So, now that we've ensured minimal distortion, we must ensure approximately constant gain for the remaining frequencies.  The amplitude as a function of frequency is (1 - e^(-1/RCf)) * Vin, where Vin is from the DAC.  We can generate stable frequencies up to 5kHz or so, so I'll choose that as the top range for constant amplitude.  Then, the amplitude at full voltage from the dac, at 5kHz is approximately .01v.  So, we just invert the amplitude curve, starting from 1% dac output.
 
 <img src="/images/DCO_DCO20.png">
+
+TODO: AC coupling - aim for 1.5 Hz cut off - this is 1uf, 100k resistor
