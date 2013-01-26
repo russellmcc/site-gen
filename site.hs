@@ -18,122 +18,64 @@ import qualified Data.ByteString.Lazy as LBS
 import qualified Data.ByteString.Internal as LBSI
 import Hakyll
 
+postCtx ∷ Context String
+postCtx = mconcat [ dateField "date" "%B %e, %Y",
+                    defaultContext
+                  ]
+
 main :: IO ()
 main = hakyll $ do
 
     staticCopy
+    cssProcess
 
     -- Render posts
     match "posts/*" $ do
         route   $ setExtension ".html"
-        compile $ pageCompiler
-            >>> arr (renderDateField "date" "%B %e, %Y" "Date unknown")
-            >>> renderTagsField "prettytags" (fromCapture "tags/*")
-            >>> arr renderScore
-            >>> applyTemplateCompiler "templates/post.html"
-            >>> applyTemplateCompiler "templates/default.html"
-            >>> relativizeUrlsCompiler
+        compile $ compileWithTemplate "templates/post.html"
     
     match "resume.md" $ do
         route $ setExtension ".html"
-        compile $ pageCompiler
-           >>> applyTemplateCompiler "templates/resume.html"
-           >>> applyTemplateCompiler "templates/default.html"
-           >>> relativizeUrlsCompiler
+        compile $ compileWithTemplate "templates/resume.html"
                
     match "about.md" $ do
         route $ setExtension ".html"
-        compile $ pageCompiler
-           >>> applyTemplateCompiler "templates/resume.html"
-           >>> applyTemplateCompiler "templates/default.html"
-           >>> relativizeUrlsCompiler
+        compile $ compileWithTemplate "templates/resume.html"
 
-    -- Index
-    match "index.html" $ route idRoute
-    create "index.html" $ constA mempty
-        >>> arr (setField "title" "Home")
-        >>> requireAllA "posts/*" (id *** arr (take 3 . reverse . byScore) >>> addPostList)
-        >>> sortedPosts
-        >>> applyTemplateCompiler "templates/index.html"
-        >>> applyTemplateCompiler "templates/default.html"
-        >>> relativizeUrlsCompiler
+    createListOfPosts "index.html" "templates/index.html" (take 3 . recentFirst)
+    createListOfPosts "archive.html" "templates/posts.html" recentFirst
 
-    -- Tags
-    create "tags" $
-        requireAll "posts/*" (\_ ps -> readTags ps :: Tags String)
+    create ["rss.xml"] $do
+      route idRoute
+      compile $ do
+        posts <- chronological <$> loadAllSnapshots "posts/*" "content"
+        fullCtx <- pure (field "description" (pure . itemBody) `mappend` postCtx)
+        renderRss feedConfiguration fullCtx posts
 
-    -- Add a tag list compiler for every tag
-    match "tags/*" $ route $ setExtension ".html"
-    metaCompile $ require_ "tags"
-        >>> arr tagsMap
-        >>> arr (map (\(t, p) -> (tagIdentifier t, makeTagList t p)))
-
-    -- Render RSS feed
-    match "rss.xml" $ route idRoute
-    create "rss.xml" $
-        requireAll_ "posts/*"
-            >>> mapCompiler (arr $ copyBodyToField "description")
-            >>> renderRss feedConfiguration
-
-    -- Read templates
     match "templates/*" $ compile templateCompiler
+
   where
-    renderTagCloud' :: Compiler (Tags String) String
-    renderTagCloud' = renderTagCloud tagIdentifier 100 120
+    doTpl t = applyTemplate t postCtx
+    compileWithTemplate a = do
+        tpl <- loadBody a
+        defaultTpl <- loadBody "templates/default.html"                          
+        pandocCompiler >>= doTpl tpl >>= saveSnapshot "content" >>= doTpl defaultTpl >>= relativizeUrls
 
-    tagIdentifier :: String -> Identifier (Page String)
-    tagIdentifier = fromCapture "tags/*"
-
-byScore ∷ [Page String] → [Page String]
-byScore = sortBy score'
-    where score' a b = score'' a `compare` score'' b
-          score'' ∷ Page String → Int
-          score'' a = sum $ maybeScore a
-          maybeScore ∷ Page String → Maybe Int
-          maybeScore = fmap fst . listToMaybe . reads . getField "score"
-
-getTags = map trim . splitAll "," . getField "tags"
-
-sortedPosts ∷ Compiler (Page String) (Page String)
-sortedPosts = id &&& constA () >>> 
-              setFieldA "sorted" tagList 
-    where tagList = requireA "tags" $
-                    arr (\(_, t) → tagsMap t) >>>
-                    mapCompiler makeSortedTagList >>>
-                    arr mconcat
-
-makeSortedTagList ∷ Compiler (String, [Page String]) String
-makeSortedTagList = constA mempty &&& id
-            >>> arr (\(p, (t, ps)) → ((p, t), ps))
-            >>> first (setFieldA "tag" id)
-            >>> postList' "posts" "templates/postitem.html"
-            >>> applyTemplateCompiler "templates/taglistitem.html"
-            >>^ pageBody
-
--- | Auxiliary compiler: generate a post list from a list of given posts, and
--- add it to the current page under @$posts@
---
-addPostListForTag = second (arr $ reverse . chronological) >>>
-                    postList' "posts" "templates/postitem.html"
-
-addPostList :: Compiler (Page String, [Page String]) (Page String)
-addPostList = postList' "posts" "templates/postitem.html"
-
-postList' field template = setFieldA field $
-        require template (\p t -> map (applyTemplate t) p)
-        >>^ pageBody . mconcat
-
-makeTagList :: String
-            -> [Page String]
-            -> Compiler () (Page String)
-makeTagList tag posts =
-    constA (mempty, posts)
-        >>> addPostListForTag
-        >>> arr (setField "title" tag)
-        >>> applyTemplateCompiler "templates/posts.html"
-        >>> applyTemplateCompiler "templates/default.html"
-        >>> relativizeUrlsCompiler
-
+    createListOfPosts ident tpl postSort = 
+        create [ident] $ do
+          route idRoute
+          compile $ do
+            posts <- postSort <$> loadAll "posts/*"
+            itemTpl <- loadBody "templates/postitem.html"
+            postList <- applyTemplateList itemTpl postCtx posts
+            fullCtx <- pure (field "posts" (pure $ pure postList) `mappend` postCtx)
+            indTpl <- loadBody tpl
+            defTpl <- loadBody "templates/default.html"
+            makeItem "" >>=
+             applyTemplate indTpl fullCtx >>=
+             applyTemplate defTpl fullCtx >>=
+             relativizeUrls
+                 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
     { feedTitle       = "More Facts"
@@ -142,22 +84,23 @@ feedConfiguration = FeedConfiguration
     , feedRoot        = "http://www.russellmcc.com"
     }
 
-renderScore p = setField "cScore" score p
-    where score = getField "score" p
 
-staticDirs = [ "stylesheets/*", "images/*", "resume-russell-mcclellan.pdf" ]
+staticDirs = [ "stylesheets/*.css", "images/*", "resume-russell-mcclellan.pdf" ]
 
 matchAll patterns comp = sequence $ match <$> patterns <*> pure comp
 
-staticCopy = matchAll staticDirs staticCopy'
-    where staticCopy' = do 
-            route $ ((matchRoute "**.scss" $ setExtension "css") `mappend` idRoute)
-            compile $ byExtension getResourceLBS
-                   [ (".scss", processCssCompiler)
-                   ]
+staticCopy = matchAll staticDirs $ do
+               route idRoute
+               compile copyFileCompiler
 
-processCssCompiler = getResourceString >>> (unsafeCompiler doScss)
-    where doScss a = LBS.pack <$> ((<$>) <$> (pure LBSI.c2w) <*> (show <$> (getRight [] <$> (process $ parseOnly styleSheet $ pack a))))
+cssProcess = match "**.scss" $ do
+               route $ setExtension "css"
+               compile processCssCompiler
+
+processCssCompiler = do
+      a <- getResourceString
+      unsafeCompiler (doScss $ itemBody a) >>= makeItem
+    where doScss a = LBS.pack <$> ((<$>) <$> pure LBSI.c2w <*> (show <$> (getRight [] <$> process (parseOnly styleSheet $ pack a))))
           getRight o (Left _) = o
           getRight _ (Right i) = i
 

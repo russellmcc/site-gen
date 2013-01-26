@@ -7,5 +7,5 @@ build-type:     Simple
 cabal-version:  >= 1.2
 
 executable site
-  build-depends:  base, bytestring, text, attoparsec, parsec, transformers, containers, hakyll < 4
+  build-depends:  base, bytestring, text, attoparsec, parsec, transformers, containers, hakyll > 4
   main-is:        Site.hs
