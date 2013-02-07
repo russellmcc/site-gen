@@ -14,6 +14,8 @@ import CssProcess
 import CssTokenizer
 import Data.Attoparsec.Text (parseOnly)
 import Data.Text (pack)
+import Data.Set as S
+import Text.Pandoc
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.ByteString.Internal as LBSI
 import Hakyll
@@ -22,6 +24,19 @@ postCtx ∷ Context String
 postCtx = mconcat [ dateField "date" "%B %e, %Y",
                     defaultContext
                   ]
+
+myPandocCompiler ∷ Compiler (Item String)
+myPandocCompiler = pandocCompilerWith myReaderOptions myWriterOptions
+  where
+    myWriterOptions = def
+    myReaderOptions = def
+                      {
+                        readerExtensions = (mconcat (S.insert <$> 
+                          [ Ext_definition_lists
+                          , Ext_multiline_tables
+                          , Ext_markdown_in_html_blocks
+                          ])) $ strictExtensions
+                      }
 
 main :: IO ()
 main = hakyll $ do
@@ -59,11 +74,11 @@ main = hakyll $ do
     compileWithTemplate a = do
         tpl <- loadBody a
         defaultTpl <- loadBody "templates/default.html"                          
-        pandocCompiler >>= 
-        doTpl tpl >>= 
-        saveSnapshot "content" >>= 
-        doTpl defaultTpl >>= 
-        relativizeUrls
+        myPandocCompiler >>= 
+         doTpl tpl >>= 
+         saveSnapshot "content" >>= 
+         doTpl defaultTpl >>= 
+         relativizeUrls
 
     createListOfPosts ident tpl postSort = 
         create [ident] $ do

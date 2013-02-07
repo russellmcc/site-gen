@@ -3,20 +3,19 @@ layout: resume
 title: Resume
 ---
 
-<div class = "resume-section">
-<div class = "pdflink">
-## [pdf resume](resume-russell-mcclellan.pdf)
-</div>
-</div>
 <div class="resume-section">
+<div class="pdflink">
+
+## [pdf resume](resume-russell-mcclellan.pdf)
+
+</div>
+</div><div class="resume-section">
 
 ## Profile
 
 I am a professional software developer and amateur electronics tinkerer interested in synthesizers, programming languages and other technologies for creative expression. 
 
-</div>
-
-<div class = "resume-section">
+</div><div class="resume-section">
 
 ## Technical Skills
 
@@ -26,33 +25,45 @@ I am a professional software developer and amateur electronics tinkerer interest
  * Embedded programming - C, DSP56K, AVR, ARM, and x86 assembly
  * DSP algorithms - especially audio effects and music synthesis
 
-</div>
+</div><div class="resume-section">
 
-<div class="resume-section">
 ## Work Experience
 
-<dl><dt>2009-2013</dt><dd>Software Developer<br/> Mark of the Unicorn</br> Cambridge</br> Massachusetts</dd></dl>
+2009-2013
+ ~  Software Developer  
+    Mark of the Unicorn  
+    Cambridge  
+    Massachusetts
 
  * Created and expanded tools for musicians on Mac and Windows using C++.
 
-<dl><dt>2008</dt><dd>Software Intern<br/> Line 6<br/> Calabasas </br> California</dd></dl>
+2008
+ ~  Software Intern  
+    Line 6  
+    Calabasas  
+    California
 
  * Developed embedded C code for a portable sound recorder
  * Used ARM assembly to explore guitar processing on portable devices
  
-
-<dl><dt>2006-2009</dt><dd>Teaching Assistant<br/> Caltech<br/> Pasadena<br/> California</dd></dl>
+2006-2009
+ ~  Teaching Assistant  
+    Caltech  
+    Pasadena  
+    California
  
  * CS 2. Introduction to Programming Methods - An introductory CS class in Java
  * CS 171. Introduction to Computer Graphics - C++ graphics with and without APIs
  * CS 101 Special Topics in Computer Science - General Purpose GPU Programming
-</div>
 
-<div class = "resume-section">
+</div><div class="resume-section">
 
 ## Education
 
-<dl><dt>2009</dt><dd>B.S. in Computer Science<br/> Caltech<br/> Pasadena<br/> California<br/></dd></dl>
+2009
+ ~  B.S. in Computer Science  
+    Caltech  
+    Pasadena  
+    California
 
 </div>
-

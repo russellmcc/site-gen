@@ -4,7 +4,7 @@ title: Project Log: Eurorack Buffered Multiple
 tags: blog
 score: 1
 teaser: I finally finished my first-ever DIY eurorack synthesizer module - the ever-humble buffered multiple.  
-img: /images/buffer_insitu.JPG
+img: /images/buffer_insitu.jpg
 imgalt: Eurorack Buffered Multiple.
 ---
 
@@ -26,7 +26,7 @@ All of the design files for the project, including a list of all parts required,
 
 ## Board Fabrication
 
-![PCB](/images/buffer_board.JPG)\
+![PCB](/images/buffer_board.jpg)
 
 The board was fabricated by [OSH Park](http://oshpark.com/), which was quite affordable at $6 per board.  A nice feature of OSH Park is that they support EAGLE files, so no export to the more-standard gerber files is needed.
 
@@ -34,6 +34,6 @@ I hand assembled the boards with parts from [mouser](http://www.mouser.com/Proje
 
 ## Front Panel
 
-![completed buffer](/images/buffer_insitu.JPG)\
+![completed buffer](/images/buffer_insitu.jpg)
 
 The panel was lasercut out of acrylic from [Inventables](https://www.inventables.com/) at a [local lasercutting shop](http://dangerawesome.co/).  The design files were done in InkScape.  

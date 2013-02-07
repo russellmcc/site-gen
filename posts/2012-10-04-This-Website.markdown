@@ -16,24 +16,20 @@ The code is based on a Haskell blog framework called [Hakyll](http://jaspervdj.b
 
 If you're interested in how it works, most of the guts are in four short files: 
 
-<dl>
+------------
+
+[site.hs](https://github.com/russellmcc/site-gen/blob/master/site.hs)
+~   contains the basic structure of the site.  Hakyll 4 has finally removed all usage of the cumbersome [arrows](http://www.haskell.org/arrows/) in its API, which are not my favorite abstraction for computation.
 
 ------------
 
-<dt>[site.hs](https://github.com/russellmcc/site-gen/blob/master/site.hs)</dt>
-<dd> contains the basic structure of the site.  Hakyll 4 has finally removed all usage of the cumbersome [arrows](http://www.haskell.org/arrows/) in its API, which are not my favorite abstraction for computation.</dd>
+[cssTokenizer.hs](https://github.com/russellmcc/site-gen/blob/master/cssTokenizer.hs) and [cssProcess.hs](https://github.com/russellmcc/site-gen/blob/master/cssProcess.hs)
+~   contain the custom CSS processor used to style the site.  Since these files don't make any reference to the Hakyll framework, I was more free to write in a style I prefer. For cssProcess.hs I used [SHE](https://personal.cis.strath.ac.uk/conor.mcbride/pub/she/) for the applicative idiom brackets.  More syntactic sugar, please!
 
 ------------
 
-<dt>[cssTokenizer.hs](https://github.com/russellmcc/site-gen/blob/master/cssTokenizer.hs) and [cssProcess.hs](https://github.com/russellmcc/site-gen/blob/master/cssProcess.hs)</dt>
-<dd> contain the custom CSS processor used to style the site.  Since these files don't make any reference to the Hakyll framework, I was more free to write in a style I prefer. For cssProcess.hs I used [SHE](https://personal.cis.strath.ac.uk/conor.mcbride/pub/she/) for the applicative idiom brackets.  More syntactic sugar, please!
-
-------------
-
-<dt>[frameless.scss](https://github.com/russellmcc/site-gen/blob/master/stylesheets/frameless.scss)</dt>
-<dd> includes the CSS used to style the site, heavily based on the ["frameless grid"](http://framelessgrid.com/) design concept by Joni Korpi</dd>
-
-</dl>
+[frameless.scss](https://github.com/russellmcc/site-gen/blob/master/stylesheets/frameless.scss)
+~   includes the CSS used to style the site, heavily based on the ["frameless grid"](http://framelessgrid.com/) design concept by Joni Korpi
 
 </div><div class="post">
 
