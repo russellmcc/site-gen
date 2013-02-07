@@ -59,23 +59,37 @@ main = hakyll $ do
     compileWithTemplate a = do
         tpl <- loadBody a
         defaultTpl <- loadBody "templates/default.html"                          
-        pandocCompiler >>= doTpl tpl >>= saveSnapshot "content" >>= doTpl defaultTpl >>= relativizeUrls
+        pandocCompiler >>= 
+        doTpl tpl >>= 
+        saveSnapshot "content" >>= 
+        doTpl defaultTpl >>= 
+        relativizeUrls
 
     createListOfPosts ident tpl postSort = 
         create [ident] $ do
           route idRoute
-          compile $ do
-            posts <- postSort <$> loadAll "posts/*"
-            itemTpl <- loadBody "templates/postitem.html"
-            postList <- applyTemplateList itemTpl postCtx posts
-            fullCtx <- pure (field "posts" (pure $ pure postList) `mappend` postCtx)
-            indTpl <- loadBody tpl
-            defTpl <- loadBody "templates/default.html"
+          compile $ 
             makeItem "" >>=
-             applyTemplate indTpl fullCtx >>=
-             applyTemplate defTpl fullCtx >>=
-             relativizeUrls
-                 
+            loadAndApplyTemplate tpl fullCtx >>=
+            loadAndApplyTemplate "templates/default.html" fullCtx >>=
+            relativizeUrls
+        where
+          sortedPostList ∷ Compiler [Item String]
+          sortedPostList = postSort <$> loadAll "posts/*"
+          
+          -- do a (reverse) bind under a monad
+          (=<$<) ∷ (Monad m) ⇒ m (a → m b) → m a → m b
+          f =<$< b = ((>>=) b) =<< f
+          infixr 1 =<$<
+
+          allPostBodies ∷ Compiler String
+          allPostBodies = applyTemplateList <$>
+                          loadBody "templates/postitem.html" <*> 
+                          pure postCtx =<$< 
+                          sortedPostList
+
+          fullCtx = field "posts" (pure allPostBodies) `mappend` postCtx
+          
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
     { feedTitle       = "More Facts"
