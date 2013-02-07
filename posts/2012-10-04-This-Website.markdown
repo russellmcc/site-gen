@@ -21,12 +21,12 @@ If you're interested in how it works, most of the guts are in four short files:
 ------------
 
 <dt>[site.hs](https://github.com/russellmcc/site-gen/blob/master/site.hs)</dt>
-<dd> contains the basic structure of the site.  Hakyll makes heavy use of [Arrows](http://www.haskell.org/arrows/) in its API, which are not my favorite abstraction for computation.</dd>
+<dd> contains the basic structure of the site.  Hakyll 4 has finally removed all usage of the cumbersome [arrows](http://www.haskell.org/arrows/) in its API, which are not my favorite abstraction for computation.</dd>
 
 ------------
 
 <dt>[cssTokenizer.hs](https://github.com/russellmcc/site-gen/blob/master/cssTokenizer.hs) and [cssProcess.hs](https://github.com/russellmcc/site-gen/blob/master/cssProcess.hs)</dt>
-<dd> contain the custom CSS processor used to style the site.  Since these files don't make any reference to the Hakyll framework, I was more free to write in a style I prefer: applicatives over arrows and monads whenever possible. For cssProcess.hs I used [SHE](https://personal.cis.strath.ac.uk/conor.mcbride/pub/she/) for the applicative idiom brackets.  More syntactic sugar, please!
+<dd> contain the custom CSS processor used to style the site.  Since these files don't make any reference to the Hakyll framework, I was more free to write in a style I prefer. For cssProcess.hs I used [SHE](https://personal.cis.strath.ac.uk/conor.mcbride/pub/she/) for the applicative idiom brackets.  More syntactic sugar, please!
 
 ------------
 

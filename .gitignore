@@ -11,3 +11,4 @@ _*
 /Util.o
 /examples/syntax.less
 /tests/cssProcessTest.hers
+/dist/

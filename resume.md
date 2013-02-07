@@ -3,6 +3,11 @@ layout: resume
 title: Resume
 ---
 
+<div class = "resume-section">
+<div class = "pdflink">
+## [pdf resume](resume-russell-mcclellan.pdf)
+</div>
+</div>
 <div class="resume-section">
 
 ## Profile
@@ -26,10 +31,9 @@ I am a professional software developer and amateur electronics tinkerer interest
 <div class="resume-section">
 ## Work Experience
 
-<dl><dt>2009-2012</dt><dd>Software Developer<br/> Mark of the Unicorn</br> Cambridge</br> Massachusetts</dd></dl>
+<dl><dt>2009-2013</dt><dd>Software Developer<br/> Mark of the Unicorn</br> Cambridge</br> Massachusetts</dd></dl>
 
  * Created and expanded tools for musicians on Mac and Windows using C++.
- * Interfaced Digital Performer with MOTU video hardware to create sample-accurate video audio sync.
 
 <dl><dt>2008</dt><dd>Software Intern<br/> Line 6<br/> Calabasas </br> California</dd></dl>
 
@@ -50,10 +54,5 @@ I am a professional software developer and amateur electronics tinkerer interest
 
 <dl><dt>2009</dt><dd>B.S. in Computer Science<br/> Caltech<br/> Pasadena<br/> California<br/></dd></dl>
 
-</div>
-<div class = "resume-section">
-<div class = "pdflink">
-## [pdf resume](resume-russell-mcclellan.pdf)
-</div>
 </div>
 
