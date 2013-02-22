@@ -16,7 +16,7 @@ These are available on [github](https://github.com/russellmcc/eurorack_eagle)
 [erthenvar.lbr](https://raw.github.com/russellmcc/eurorack_eagle/master/erthenvar.lbr) 
 :   Contains tested footprints for the wonderfully made
     [erthenvar](http://erthenvar.com/store/eurodiy/35hardware)
-    vertical mount modules.
+    vertical mount jacks.
 
 --------
 
