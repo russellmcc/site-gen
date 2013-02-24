@@ -17,8 +17,14 @@ $solar-green:     #859900;
 
 pre
 {
+font-family: "Ubuntu Mono";
 background: $base03;
 color: $base1;
+}
+
+code
+{
+font-family:"Ubuntu Mono";
 }
 
 .sourceCode  .c      { color: $base01 ; font-style: italic ; }                     // Comment 
