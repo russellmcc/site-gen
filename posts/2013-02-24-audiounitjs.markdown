@@ -12,7 +12,7 @@ imgalt: HTML oscilloscope UI.
 
 ![HTML Oscilloscope](/images/fivescope.png)
 
-[audiounitjs](https://www.github.com/russellmcc/audiounitjs) was borne out of frustration with two issues: audio plug-in UIs are frustrating and annoying to write, and iOS audio programming is difficult even to those with much audio programming experience, due to poorly documented APIs.
+[audiounitjs](https://www.github.com/russellmcc/audiounitjs) was borne out of frustration with two issues: audio plug-in UIs are annoying to write, and iOS audio programming is difficult even to those with much audio programming experience, due to poorly documented APIs.
 
 In audiounitjs, you write a CoreAudio Audio Unit, and an HTML UI, and you get a Mac App, an iOS App, and a Audio Unit plug-in all using that UI, for free.
 
@@ -29,6 +29,6 @@ Install via npm with `npm install -g audiounitjs`.  I made a [quick screencast](
 </div><div class="post">
 # Future Features
 
-Currently, this is an extremely niche project, because it requires the user to be able to create Audio Unit C++ code.  In the future I'd like to relax this requirement by adding some sort of JavaScript audio API.  Perhaps the easiest way to do this would be to implement the WebAudio API as an AudioUnit.  If I did that, the javascript code would control all of the audio processing, and I could add the browser as a fourth target.
+Currently, this is an extremely niche project, because it requires the user to be able to create Audio Unit C++ code.  In the future I'd like to relax this requirement by adding some sort of JavaScript audio API.  Perhaps the easiest way to do this would be to implement the WebAudio API for CoreAudio.  If I did that, the JavaScript code would control all of the audio processing, and I could add the browser as a fourth target.
 
 Another feature that might be fun would be to automatically support OSC messages mapped to Audio Unit parameters.  This would be not difficult to implement and would allow the stand alone and iphone versions to be automated by something like [duration.cc](http://www.duration.cc/).
