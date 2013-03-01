@@ -2,7 +2,6 @@
 module Main where
 
 import Prelude hiding (id, foldr, elem, sum)
-import Control.Arrow ((>>>), (>>^), (^>>), (***), (&&&), arr, second, first)
 import Control.Category (id)
 import Data.Monoid (mempty, mconcat, mappend)
 import Control.Applicative
@@ -31,11 +30,11 @@ myPandocCompiler = pandocCompilerWith myReaderOptions myWriterOptions
     myWriterOptions = def
     myReaderOptions = def
                       {
-                        readerExtensions = (mconcat (S.insert <$> 
+                        readerExtensions = mconcat (S.insert <$> 
                           [ Ext_definition_lists
                           , Ext_multiline_tables
                           , Ext_markdown_in_html_blocks
-                          ])) $ strictExtensions
+                          ]) strictExtensions
                       }
 
 main :: IO ()
@@ -93,7 +92,7 @@ main = hakyll $ do
           
           -- do a (reverse) bind under a monad
           (=<$<) ∷ (Monad m) ⇒ m (a → m b) → m a → m b
-          f =<$< b = ((>>=) b) =<< f
+          f =<$< b = (b >>=) =<< f
           infixr 1 =<$<
 
           allPostBodies ∷ Compiler String
