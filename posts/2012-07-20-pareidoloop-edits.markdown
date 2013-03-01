@@ -1,10 +1,10 @@
 ---
 layout: post
-title: Project Log: Pareidoloop Modifications
+title: Pareidoloop In Color
 tags: blog
 score: 4
 teaser: I made some modifications to a face-generation toy called <a href="http://russellmcc.github.com/pareidoloop">pareidoloop</a>
-img: /images/plface0.png
+img: /images/plfacebanner.png
 imgalt: Creepy face generated in pareidoloop
 ---
 

@@ -12,3 +12,4 @@ _*
 /examples/syntax.less
 /tests/cssProcessTest.hers
 /dist/
+/images/.DS_Store

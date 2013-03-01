@@ -12,6 +12,7 @@
 $sexyred: rgb(211, 41, 67);
 $yellow: rgb(244, 196, 144);
 $pink: rgb(255, 189, 199);
+$bggray: rgb(45,43,45);
 
 // These two together form a fixed vertical grid.  in particular, the 
 // sub-headings are snapped vertically to a baseline.
@@ -97,11 +98,10 @@ html {
  }
 
 body {
-    background-image: url("/images/bg.png");
     background-attachment: fixed;
     background-position: right bottom;
     background-repeat: no-repeat;
-    background-color: #303030;
+    background-color: $bggray;
 }
 
 #contact {
@@ -168,6 +168,15 @@ body {
     margin-bottom:1rem;
 }
 
+.postpreview {
+    background-size: cover;
+    display:block;
+}
+
+.postpreview-date {
+    text-align: center;
+}
+
 @mixin preview {
     @include headfont;
     color: $sexyred;
@@ -182,6 +191,7 @@ body {
     margin-left: .3rem;
 }
 
+.postpreview-title,
 .postpreview h2,
 .post h2,
 .resume h2 {
@@ -194,13 +204,18 @@ body {
     margin-bottom: .3rem;
 }
 
-.postpreview h3,
+.postpreview-date,
 .post h3,
 .resume h3,
 .resume dt {
     @include preview;
     margin-left: .2rem;
     font-size: 1rem;
+}
+
+.postpreview-date, .postpreview-title {
+    color:$sexyred;
+    display:block;
 }
 
 .about-section dl {

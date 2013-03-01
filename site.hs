@@ -57,8 +57,7 @@ main = hakyll $ do
         route $ setExtension ".html"
         compile $ compileWithTemplate "templates/resume.html"
 
-    createListOfPosts "index.html" "templates/index.html" (take 3 . recentFirst)
-    createListOfPosts "archive.html" "templates/posts.html" recentFirst
+    createListOfPosts "index.html" "templates/index.html" recentFirst
 
     create ["rss.xml"] $do
       route idRoute
@@ -107,10 +106,11 @@ main = hakyll $ do
           
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
-    { feedTitle       = "More Facts"
-    , feedDescription = "A Blog"
+    { feedTitle       = "Russell McClellan"
+    , feedDescription = "russellmcc.com"
     , feedAuthorName  = "Russell McClellan"
     , feedRoot        = "http://www.russellmcc.com"
+    , feedAuthorEmail = "russell.mcclellan@gmail.com"
     }
 
 

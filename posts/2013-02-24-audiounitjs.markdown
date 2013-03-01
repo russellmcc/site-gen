@@ -1,6 +1,6 @@
 ---
 layout: post
-title: project log: audiounitjs
+title: audiounitjs
 tags: blog
 score: 1
 teaser: One of the most frustrating, thankless, and time-consuming parts of audio plug-in development is creating the UI.  I've made a framework to allow audio programmers to use HTML and Javascript to quickly write plug-in UIs.  As a bonus, you can write your audio processing and UI code once, and then compile it as a Mac plug-in, a Mac standalone app, and an iOS app!
@@ -9,8 +9,6 @@ imgalt: HTML oscilloscope UI.
 ---
 
 # Background
-
-![HTML Oscilloscope](/images/fivescope.png)
 
 [audiounitjs](https://www.github.com/russellmcc/audiounitjs) was borne out of frustration with two issues: audio plug-in UIs are annoying to write, and iOS audio programming is difficult even to those with much audio programming experience, due to poorly documented APIs.
 

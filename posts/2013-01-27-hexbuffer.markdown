@@ -1,10 +1,10 @@
 ---
 layout: post
-title: Project Log: Eurorack Buffered Multiple
+title: Eurorack Buffered Multiple
 tags: blog
 score: 1
 teaser: I finally finished my first-ever DIY eurorack synthesizer module - the ever-humble buffered multiple.  
-img: /images/buffer_insitu.jpg
+img: /images/bufferbanner.png
 imgalt: Eurorack Buffered Multiple.
 ---
 

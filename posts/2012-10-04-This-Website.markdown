@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Project Log: This Website
+title: Creating This Website
 tags: blog
 score: 1
 teaser: I auto-generate this site from <a href="http://daringfireball.net/projects/markdown/">markdown</a> code using Haskell.  The generation code includes a custom CSS processor to output modern, reactive CSS.

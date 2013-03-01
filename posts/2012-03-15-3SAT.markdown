@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Project Log: 3-Sat Online Puzzle Game
+title: 3-Sat Online Puzzle Game
 tags: blog
 score: 3
 teaser: <a href="http://russellmcc.github.com/3-SAT/?puzzle=abcabCaBcaBC">3-SAT</a> was one-day project to implement a classic CS problem as a browser-based puzzle game.
