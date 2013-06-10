@@ -28,6 +28,8 @@ myPandocCompiler ∷ Compiler (Item String)
 myPandocCompiler = pandocCompilerWith myReaderOptions myWriterOptions
   where
     myWriterOptions = def
+                      { writerHTMLMathMethod = MathJax ""
+                      }
     myReaderOptions = def
                       {
                         readerExtensions = mconcat (S.insert <$> 
