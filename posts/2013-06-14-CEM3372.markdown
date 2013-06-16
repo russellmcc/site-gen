@@ -74,7 +74,7 @@ Now, let's assume \\(V\_{in}\\) is quite small.  Then increasing \\(V\_{in}\\) w
 
 The rest of the post will be a slightly more detailed analysis of this situation.  The main result here is the transfer function is more-or-less the same as the RC filter case, except the amplitude of the output does not depend on the resistance.
 
-The main difference in the CEM3372 situation from the currentbased- RC filter above is that in the RC filter, both the resistance and the capacitor are tied to ground.  That's not true here, as D2 goes accross \\(V\_{out}\\) to \\(V\_{in} - V\_{Q2be}\\), where \\(V\_{Q2be}\\) is the base-emitter voltage of Q1.  This acts as a [feed forward](http://en.wikipedia.org/wiki/Feed_forward_(control)) loop and eliminates the awkward effect of increasing the output amplitude when the resistance increases.
+The main difference in the CEM3372 situation from the currentbased- RC filter above is that in the RC filter, both the resistance and the capacitor are tied to ground.  That's not true here, as D2 goes accross \\(V\_{out}\\) to \\(V\_{in} - V\_{Q2be}\\), where \\(V\_{Q2be}\\) is the base-emitter voltage of Q1.  This acts as afeedback loop and eliminates the awkward effect of increasing the output amplitude when the resistance increases.
 
 Let's recall first that for small signals, the diode acts as a resistor in series with a voltage source - call the voltage \\(V\_{D}\\), and the resistance \\(Z\_{D}\\).  Since Q2 and D2 are matched, and the large-scale currents are the same, they have the same resistance [\[3\]](#foot3) and voltage.  So, the voltage accross D2 is given by \\(V\_{D} + i\_{D2} Z\_{D}\\), and \\(V\_{Q2be} = V\_{D} + i\_{in} Z\_{D}\\)
 
