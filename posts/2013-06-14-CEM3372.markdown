@@ -8,6 +8,10 @@ img: /images/cembanner.png
 imgalt: a bunch of CEMs
 ---
 
+[view as pdf](/images/cem3372.pdf)
+
+------
+
 # Background
 
 Back in the heyday of the [giant](http://www.youtube.com/watch?v=xq4XOVde1Yk) [analog](http://www.youtube.com/watch?v=Yv4EADAHwOA) [polysynths](http://www.youtube.com/watch?v=FfhnF2SZTzE) (i.e. the early to mid 80s), most synthesizers were powered by analog integrated circuits.  The small size of these chips is what enabled synths to have so many voices in such a relatively small amount of space.  Generally, each standard synth function ([VCO](http://en.wikipedia.org/wiki/Voltage-controlled_oscillator), [VCF](http://en.wikipedia.org/wiki/Voltage-controlled_filter), [VCA](http://en.wikipedia.org/wiki/Voltage-controlled_amplifier)) was implemented by a dedicated chip.
