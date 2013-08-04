@@ -1,0 +1,120 @@
+---
+layout: post
+title: More RTTI, More Problems
+tags: blog
+score: 3
+teaser: 
+img: /images/rtti.png
+imgalt: rtti
+---
+
+## or, _An Elementary Explanation of Mach-o Linkage with Applications to Having Your C++ Program Not Constantly Crash in `dynamic_cast`_
+
+Sometimes it seems like a good idea to split your large program into multiple dynamic libraries, and share C++ objects across dylib boundaries.  While this approach is certainly feasible, the waters are surprisingly treacherous, especially for apps that use C++ RTTI.  This guide is meant for deploying to Apple Platforms ca. Mavericks/iOS7, but it probably applies to any mach-o platform with clang as a compiler, and the ELF case is similar enough that this guide will probably still be useful.
+
+</div><div class="post">
+
+## Symbol Visibility
+
+While there are is a veritible managerie of symbol types that exist in mach-o binaries (and we will be encountering many of these shortly), there is only one distinction you can make in source code to control which symbol type gets generated during linking: "default" visibility vs "hidden" visibility.
+
+default visibility
+~   _default_ visibility creates what `nm -m` calls an _external_ symbol.  These symbols can be looked up by client libraries during dynamic loading.
+hidden visibility
+~   _hidden_ visibility creates what `nm -m` calls a _non-external_ symbol.  These cannot be seen anywhere outside of the library where they exist.
+
+Confusingly, if your app uses best practice, you'll pass the `-fvisibility=hidden` flag to the linker, which sets the "default" for symbols that are not explicitly marked in source code is _hidden_.  This is a good idea because you don't want all of your private functions in dynamic libraries leaking out to the rest of your program.  In fact, this is probably why you wanted to split your program across executables in the first place.  Using this flag, for symbols that you want to be accessible to outside libraries, you must explicitly mark them as having _default_ visibility.  I don't know any justification for these names - if I were designing gcc, I would have gone with "external" and "private" instead of "default" and "hidden".
+
+</div><div class="post">
+
+## Defining "Undefined" Symbols
+
+If you give a function a definition, it becomes a _defined_ symbol in your executable or shared library.  If the function has no definition, but does have a declaration, it gets marked as an _undefined_ symbol.
+
+_defined_, _non-external_ symbols are private to the specific library where they were created
+
+_defined_, _external_ symbols are exported to all other libraries.  By default, if you link to any library that has a symbol with the same name, you'll get a linker error.
+
+_undefined_, _non-external_ symbols are an immediate linker error
+
+_undefined_, _external_ symbols will be looked up at runtime.  By default, the linker will check to make sure that some dynamic library that you've linked to contains the symbol in question, and if it's missing it will issue an error.  This behavior can be disabled, causing a runtime error in the missing symbol case.
+
+So far, so boring.  Hopefully everything up until now has been a review if you are even remotely considering breaking your program up into multiple binaries.
+
+</div><div class="post">
+
+## A Root of Some Evil: stdc++ `dynamic_cast` Implementation Details
+
+To understand why any of these linker specifics is even relevant to keeping your program crash-free, we need to understand an important detail about how `dynamic_cast` is implemented in stdc++ and c++abi - two type infos are detected as equal through a _pointer compare_ [\[1\]](#foot1).  This means that `dynamic_cast` can be **wrong** if there's more than one copy of the type info structure - the structures may be identical, but it doesn't matter because only their locations in memory are being compared.  So, because of this optimization, we actually have to care about how and when these type info objects get generated, and how they behave at runtime.
+
+</div><div class="post">
+
+## Vague Linkage (Yes, That's Actually What It's Called)
+
+The way type infos work in gcc and clang is that each `.o` file (that is, compiled `.cpp` file) generates a _weak_ version of each class's type info.  This is called _vague linkage_ in the docs (such as there are docs for this low-level crap).  At link time, these are combined into a single copy of that type info.  For classes that are marked in code to be _hidden_, that's more or less the end of the story - the typeinfo is marked _non-external_, and of course `dynamic_cast`s within that binary work, and since the class was hidden, you aren't supposed to be able to use it outside of that binary, so in theory `dynamic_cast`s outside of the binary aren't a concern.  In practice, this requires some discipline from programmers to avoid disaster - if you mark a class as _hidden_, you **really can't** use it safely outside of the binary where it was defined.
+
+For classes that are marked _default_, the story is a bit more complicated as it involves an entirely new symbol type, called a _weak external_ symbol.  These symbols are **coalesced** at runtime such that there is only one copy of each in a given program (which may comprise several binaries).  This is precisely the behavior that enables the pointer compare in `dynamic_cast` - without this, there would be no way to share types across dynamic library boundaries.
+
+</div><div class="post">
+
+## Sounds Great, What Could Go Wrong?
+
+Well, if you've programmed carefully, you should be safe from any `dynamic_cast` problems.  The issue is, if you've programmed slightly sloppily, in the current toolchain, you'll get no major errors at compile time, and your only indication is that something is wrong is that `dynamic_cast` will sometimes inexplicitly return zero, probably causing a crash.  Here are three common cases that I've seen:
+
+-----
+
+### Using a _hidden_ class from outside its home binary
+
+How could this happen? Well, both clang and g++ happily will mark member functions as _default_ even if the class is _hidden_.  So, you can include the class's header from another binary and use the any of the functions that were marked _default_. This is a recipe for disaster, because **both binaries** will create a _non-external_, private copy of the type info and the pointer comparison will fail.
+
+To detect this, run `nm -mo * | c++filt` on all your binaries, and ensure that there aren't any duplicate "non-external typeinfo" symbols.
+
+-----
+
+### Having a class marked _hidden_ in one binary and _default_ in another
+
+This can happen if you are using a macro system to mark your classes that breaks down somehow.  I've also seen this when template class explicit instantiations are not marked with the correct visibility.  This will result in the exact same sort of problems seen above, as the weak symbol loading will **not** coalesce the _weak external_ version with the _non-external_ version.
+
+Similarly to the last case, to detect this, run `nm -mo * | c++filt` and ensure that for any typeinfos that have at least one _non-external_ copies, there are no other copies of that typeinfo.
+
+-----
+
+### Having a class marked _hidden_ in one compilation unit and _default_ in another in the same binary
+
+This is sort of the "ultimate screw case", and I've only seen it happen with template instantiations - if you have an explicit instantiation that's marked _default_, and somehwhere else, in a different compilation unit in the same binary, you have an implicit instantiation, it will be marked _hidden_.
+
+What happens here?  Well, in modern (10.7+) versions of `ld`, this is a warning.  ("`direct access` ... `means the weak symbol cannot be overriden at runtime`").  The compilation unit with the _hidden_ definition will incorrectly use the local definition, and dynamic casts will fail.  Other compilation units will be fine, and the symbol will be marked _external_ in the binary.
+
+On older versions of `ld` (10.6 and below), things are even worse.  The symbol will be _non-external_ in the binary if it's marked _hidden_ for even one compilation unit - making `dynamic_cast`s fail throughout the entire binary, even in compilation units where the visibility was correct.  No meaningful warning is generated.
+
+To detect this insidious problem, if you're compiling with the 10.7+ linker, I recommend turning `fatal_warnings` on.  If you're using the 10.6 linker, the `nm` method from before will work because the symbol will be marked _non-external_ in the binary.  If you're super-paranoid, you can run `nm -om * | c++filt` on all your `.o` files - object files where the visibility was _hidden_ will report `weak private external typeinfo` where object files with _default_ visibility will report `weak external typeinfo` (note that if you forget the `-m` flag on `nm` these two cases are indistinguishable).
+
+</div><div class="post">
+
+## What Have We Learned?
+
+-----
+
+### Be careful when sharing C++ objects across binary boundaries - this is something that's a lot more dangerous than perhaps it should be.
+
+-----
+
+### If you are sharing C++ across binary boundaries, consider if the risks of using RTTI are worth it.
+
+-----
+
+### If you're using RTTI, make sure that each class that's used by multiple binaries is marked with _default_  visibility wherever it is used.
+
+-----
+
+### If you're using a modern `ld`, turn on `fatal_warnings`
+
+-----
+
+### Write a script using `nm` to ensure that if a typeinfo symbol is duplicated between binaries, all copies of it are marked _weak external_, and add this script to your unit tests.
+
+</div><div class="post">
+
+## footnote
+
+<a id="foot1"></a> [1]: You can verify this yourself [by looking at the easy-to-read llvm source](http://llvm.org/svn/llvm-project/libcxxabi/trunk/src/private_typeinfo.cpp) (check the `is_equal` function implementation).  This is actually determined by a compile-time flag called `_LIBCXX_DYNAMIC_FALLBACK`.  If this flag is on, a string compare occurs during `dynamic_cast`.  This is intended to allow c++abi to be used on platforms that don't allow for weak symbols or COMDAT.  This flag is off in apple-provided builds of c++abi.
