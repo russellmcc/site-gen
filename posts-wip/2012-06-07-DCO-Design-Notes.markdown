@@ -1,6 +1,6 @@
 ---
 layout: post
-title: DCO Design Notes - Part One
+title: Computer Controlled Oscillator
 tags: blog
 score: 12
 teaser: Notes for the blinkbit DCO design
