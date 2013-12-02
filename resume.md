@@ -13,7 +13,7 @@ title: Resume
 
 ## Profile
 
-I am a professional software developer and amateur electronics tinkerer interested in synthesizers, programming languages and other technologies for creative expression. 
+I am a professional software developer and amateur electronics tinkerer interested in synthesizers, programming languages, mathematics, and other technologies for creative expression. 
 
 </div><div class="resume-section">
 
