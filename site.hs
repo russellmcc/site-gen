@@ -48,15 +48,15 @@ main = hakyll $ do
     -- Render posts
     match "posts/*" $ do
         route   $ setExtension ".html"
-        compile $ compileWithTemplate "templates/post.html"
+        compile $ compileWithTemplate "templates/post.html" (Just "templates/afterpost.html")
     
     match "resume.md" $ do
         route $ setExtension ".html"
-        compile $ compileWithTemplate "templates/resume.html"
+        compile $ compileWithTemplate "templates/resume.html" Nothing
                
     match "about.md" $ do
         route $ setExtension ".html"
-        compile $ compileWithTemplate "templates/resume.html"
+        compile $ compileWithTemplate "templates/resume.html" Nothing
 
     createListOfPosts "index.html" "templates/index.html" recentFirst
 
@@ -71,12 +71,17 @@ main = hakyll $ do
 
   where
     doTpl t = applyTemplate t postCtx
-    compileWithTemplate a = do
+    maybeDoTpl (Just t) s = do
+                  tpl <- loadBody t
+                  doTpl tpl s
+    maybeDoTpl Nothing s = return s
+    compileWithTemplate a b = do
         tpl <- loadBody a
         defaultTpl <- loadBody "templates/default.html"                          
         myPandocCompiler >>= 
-         doTpl tpl >>= 
+         doTpl tpl >>=
          saveSnapshot "content" >>= 
+         maybeDoTpl b >>=
          doTpl defaultTpl >>= 
          relativizeUrls
 
