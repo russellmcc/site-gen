@@ -1,10 +1,8 @@
-<article>
+<article itemscope itemtype="http://schema.org/BlogPosting">
   <div class="post">
-    <h1>$title$</h1>
-    <time datetime="$date-8601$">$date-human$</time>
-    <p>
-    $teaser$
-    </p>
+    <h1 itemprop="name headline">$title$</h1>
+    <span class="hidden-author" itemprop="author" itemscope="" itemtype="http://schema.org/Person"><span itemprop="name"><a href="http://russellmcc.com" itemprop="url" rel="author">Russell McClellan</a></span></span>
+    <time itemprop="datePublished" datetime="$date-8601$">$date-human$</time>
   </div>
   <div class="post">
     $body$

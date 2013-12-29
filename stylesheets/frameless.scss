@@ -185,6 +185,10 @@ body {
     text-align: center;
 }
 
+.hidden-author {
+    display: none;
+}
+
 @mixin preview {
     @include headfont;
     color: $sexyred;
