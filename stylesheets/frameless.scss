@@ -14,10 +14,10 @@ $yellow: rgb(244, 196, 144);
 $pink: rgb(255, 189, 199);
 $bggray: rgb(45,43,45);
 
-// These two together form a fixed vertical grid.  in particular, the 
+// These two together form a fixed vertical grid.  in particular, the
 // sub-headings are snapped vertically to a baseline.
 
-$font-size: 20; 		
+$font-size: 20;
 $line-height: 1.7;
 
 // minimum leading for subheadings on top and bottom
@@ -93,7 +93,7 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
 }
 
 /* set the "root-em" rem units. */
-html { 
+html {
     font-size: $font-size * 1px;
  }
 
@@ -181,7 +181,7 @@ body {
     display:block;
 }
 
-.postpreview-date {
+.postpreview time {
     text-align: center;
 }
 
@@ -212,8 +212,8 @@ body {
     margin-bottom: .3rem;
 }
 
-.postpreview-date,
-.post h3,
+.postpreview time,
+.post time,
 .resume h3,
 .resume dt {
     @include preview;
@@ -221,7 +221,7 @@ body {
     font-size: 1rem;
 }
 
-.postpreview-date, .postpreview-title {
+.postpreview time, .postpreview-title {
     color:$sexyred;
     display:block;
 }
@@ -369,20 +369,20 @@ body {
     #contact {
         @include width(6);
     }
-    
+
     .resume dt {
         @include width(2);
     }
     .resume dd {
         @include margin-left(2);
     }
-    
+
     .about-section dd {
         @include padding-left(1);
     }
 
     .about-section h3,
-    .post h3,
+    .post time,
     .postpreview h3 {
         @include padding-left(1);
     }
@@ -404,7 +404,7 @@ body {
     #content {
         @include width(8);
     }
-    
+
     #contact {
         @include width(6);
         @include padding-left(2);
@@ -418,7 +418,7 @@ body {
         @include width(5);
         @include margin-left(3);
     }
-    
+
     .post h2,
     .postpreview h2,
     .resume h2 {
@@ -426,7 +426,7 @@ body {
         padding: 0rem .3rem;
         padding-top: 1rem;
     }
-    
+
     .post dt {
         float: left;
         @include width(1.8);

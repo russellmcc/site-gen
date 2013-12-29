@@ -20,7 +20,8 @@ import qualified Data.ByteString.Internal as LBSI
 import Hakyll
 
 postCtx ∷ Context String
-postCtx = mconcat [ dateField "date" "%B %e, %Y",
+postCtx = mconcat [ dateField "date-human" "%B %e, %Y",
+                    dateField "date-8601" "%Y-%m-%d",
                     defaultContext
                   ]
 
