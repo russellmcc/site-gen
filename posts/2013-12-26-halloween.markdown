@@ -3,7 +3,7 @@ layout: post
 title: Collaborative Remixing at a Halloween Party
 tags: blog
 score: 3
-teaser: Collaborative Remixing at a Halloween Party
+teaser: 
 img: /images/halloween_banner.png
 imgalt: rtti
 ---
