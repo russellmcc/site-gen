@@ -1,0 +1,17 @@
+---
+layout: post
+title: Dancing Stick Figures
+tags: blog
+score: 3
+teaser: 
+img: /images/dancingstick_banner.png
+imgalt: rtti
+---
+
+Last November, as part of [Music Hack Day](http://new.musichackday.org/), co-worker [Alex Powers](https://github.com/AlexPowers) and I created a [music visualizer](http://www.dancingstickfigures.com/) involving dancing stick figures.  Alex has had the idea of creating an "algorithmic choreography generator" for some time, and music hack day seemed like the perfect time do it.  Alex wrote a python program to take analysis from the [echo nest](http://echonest.com/) API and generate a "choreography file", describing a dance routine in completely abstract terms.  It was my job to take the choreography file and turn that into something people could look at.  This separation of responsibilities worked well, and I think it played to both of our strengths.  While Alex didn't have much choreography experience, he ended up writing code that produced fairly logical dances and worked for many different genres of music.
+
+![dancing stick figures](/images/dancingstick.png)
+
+I learned a lot during the 24 hour hack - I had never touched a 3D modeling program before, so perhaps the hardest part was creating the animated dance moves with [Blender](http://www.blender.org/).  I also had my first exposure to 3D rendering in the browser - after trying to use raw webgl, I ended up using the significantly more fully-featured [three.js](http://threejs.org/), which felt quite similar to desktop renderers like opengl.  The blender animation integration built into three.js was a total life-saver for our project.
+
+Our demo was quite a crowd pleaser, and we ended up winning the [echo nest prize](http://blog.echonest.com/post/66776489063/the-echo-nests-5th-music-hack-day-boston-was-a-roaring) for best use of the echo nest api.  Another victory for whimsy!  Code, as usual, is available [on github](https://github.com/AlexPowers/danceomatic) under a permissive license.  We used both CoffeeScript and Python.
