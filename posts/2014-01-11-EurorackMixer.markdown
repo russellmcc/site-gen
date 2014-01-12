@@ -16,7 +16,7 @@ Unlike the DCO, but like my other modules, this one is a very simple circuit wit
 
 ![back view](/images/euromix_front.png)
 
-The fabrication stack was the almost exactly same as the last few times, with designs done in [Eagle](http://www.cadsoftusa.com/), fabrication by [OSH Park](http://oshpark.com/), assembly done at home with [laser-cut](http://www.dangerawesome.co/) stencils with the help of [my friend Brendan](https://github.com/brendan0powers).  The only new step was desigining the front panels with the [rhino for mac](http://www.rhino3d.com/) beta.  Event though this was a 3D program, it worked much better for technical 2D designs than [inkscape](http://www.inkscape.org/en/), with the exception of format support.
+The fabrication stack was the almost exactly same as the last few times, with designs done in [Eagle](http://www.cadsoftusa.com/), fabrication by [OSH Park](http://oshpark.com/), assembly done at home with [laser-cut](http://www.dangerawesome.co/) stencils with the help of [my friend Brendan](https://github.com/brendan0powers).  The only new step was desigining the front panels with the [rhino for mac](http://www.rhino3d.com/) beta.  Even though this was a 3D program, it worked much better for technical 2D designs than [inkscape](http://www.inkscape.org/en/), with the exception of format support.
 
 Panels were again laser-cut out of [acrylic](https://www.inventables.com/) with the paper mask still on, and then spray-painted.
 
