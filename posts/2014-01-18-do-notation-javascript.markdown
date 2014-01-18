@@ -24,7 +24,7 @@ As noted by [Brian McKenna](http://brianmckenna.org/blog/category_theory_promise
 
 ## What about Do Notation?
 
-The one positive thing to come out of the flame-war was a specification for various simple algebraic constructs in JavaScript, aptly called ["Fantasy Land"](https://github.com/fantasyland/fantasy-land).  I thought I'd join in the fun by providing a sort of "do notation" for Fantasy Land promises using [harmony generators](http://wiki.ecmascript.org/doku.php?id=harmony:generators) and ideas from Mozilla's [task.js](http://taskjs.org/).  Code and examples are [available on GitHub](http://github.com/russellmcc/fantasydo) under the CC0 1.0 license.
+The one positive thing to come out of the flame-war was a specification for various simple algebraic constructs in JavaScript, aptly called ["Fantasy Land"](https://github.com/fantasyland/fantasy-land).  I thought I'd join in the fun by providing a sort of "do notation" for Fantasy Land monads using [harmony generators](http://wiki.ecmascript.org/doku.php?id=harmony:generators) and ideas from Mozilla's [task.js](http://taskjs.org/).  Code and examples are [available on GitHub](http://github.com/russellmcc/fantasydo) under the CC0 1.0 license.
 
 This was my first time working with harmony features of JavaScript.  Andy Wingo wrote an [excellent article on the design of generators](http://wingolog.org/archives/2013/02/25/on-generators), which did a great job of explaining why various choices were made.
 
