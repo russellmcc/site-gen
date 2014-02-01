@@ -1,0 +1,55 @@
+---
+layout: post
+title: knob.js
+tags: blog
+score: 3
+teaser: 
+img: /images/knobjs_banner.png
+imgalt: knobs
+---
+
+For the last few years, whenever [I've needed some browser-based knobs](http://www.russellmcc.com/soundfxweb/), I've used [Anothy Terrien's excellent jQuery Knob plug-in](http://anthonyterrien.com/knob/).  However, despite the high quality of that library, the situation has always made me feel a bit uncomfortable.
+
+I've never really liked the idea of bundling components like this as jQuery plug-ins, since there is no fundamental reason that a widget should need to be tied to a specific DOM-manipulation library.  jQuery's bizarre API, muddled concepts, overcomplicated semantics, and totally unique aesthetic sense have always bothered me, and as browsers get more and more compatible, it has become totally viable to ditch jQuery entirely.  The one thing that many of my projects still need from jQuery ecosystem is the various UI widgets that have for some reason been forever tied to the jQuery library.
+
+This project is an attempt to show that distributing widgets without jQuery doesn't have to be painful.
+
+</div><div class="post">
+
+## live demo
+
+<link rel='stylesheet' href='http://www.russellmcc.com/knobjs/knobjs.css'>
+<script src="http://www.russellmcc.com/knobjs/knob.min.js"></script>
+<x-knobjs-knob id="knob"></x-knobjs-knob>
+<input id="input" style="vertical-align:top;">
+<script type="text/javascript">
+  window.onload = function(){
+    var knob = document.getElementById("knob");
+    var input = document.getElementById("input");
+    knob.onchange = function(){
+      input.value = ~~knob.value;
+    }
+    input.onchange = function(){
+      knob.value = ~~input.value;
+    }
+    input.value = knob.value;
+  }
+</script>
+
+</div><div class="post">
+
+## live demo code
+
+<script src="https://gist.github.com/russellmcc/8760316.js"></script>
+
+</div><div class="post">
+
+## technical details
+
+The project uses google's [polymer platform](https://github.com/polymer/platform) to polyfill some [web component](http://www.w3.org/TR/components-intro/) features.  For now, it requires some non-semantic markup (i.e. the `<x-knobjs-knob>` tag is presentational and not semantic), but that will change once browsers start supporting the [shadow DOM](http://w3c.github.io/webcomponents/spec/shadow/) in earnest.  In the future, I'm hoping `knob.js` can simply become an alternate shadow-dom for the `<input type='range'>` element.
+
+</div><div class="post">
+
+## more info
+
+Documentation, along with code under a permissive license, is available [on GitHub](https://github.com/russellmcc/knobjs)
