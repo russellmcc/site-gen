@@ -219,6 +219,7 @@ body {
 .postpreview time,
 .post time,
 .resume h3,
+.post h3,
 .resume dt {
     @include preview;
     margin-left: .2rem;
@@ -387,7 +388,8 @@ body {
 
     .about-section h3,
     .post time,
-    .postpreview h3 {
+    .postpreview h3,
+    .post h3 {
         @include padding-left(1);
     }
 
