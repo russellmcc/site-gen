@@ -13,13 +13,13 @@ title: Resume
 
 ## Profile
 
-I am a professional software developer and amateur electronics tinkerer interested in synthesizers, programming languages, mathematics, and other tools for creative expression.
+I am a software developer interested in synthesizers, programming languages, math, and other tools for creative expression.
 
 </div><div class="resume-section">
 
 ## Technical Skills
 
- * Programming - 6 years professional experience with C/C++ (including C++11), 1 year JavaScript (CoffeeScript)
+ * Programming - professional experience with C++ (11), Javascript (Coffeescript, node.js), Python (NumPy, SciPy), Octave
  * DSP algorithms - especially audio effects and musical synthesis
  * Debugging and optimizing software at the x86/amd64 assembly level
  * Embedded programming - C, AVR, ARM, and x86 assembly
