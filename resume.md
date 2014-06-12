@@ -13,16 +13,16 @@ title: Resume
 
 ## Profile
 
-I am a professional software developer and amateur electronics tinkerer interested in synthesizers, programming languages, mathematics, and other technologies for creative expression. 
+I am a professional software developer and amateur electronics tinkerer interested in synthesizers, programming languages, mathematics, and other tools for creative expression.
 
 </div><div class="resume-section">
 
 ## Technical Skills
 
- * Programming - C/C++ (including C++11), JavaScript (CoffeeScript)
+ * Programming - 6 years professional experience with C/C++ (including C++11), 1 year JavaScript (CoffeeScript)
  * DSP algorithms - especially audio effects and musical synthesis
- * Debugging computer software at the x86/amd64 assembly level
- * Embedded programming - C, DSP56K, AVR, ARM, and x86 assembly
+ * Debugging and optimizing software at the x86/amd64 assembly level
+ * Embedded programming - C, AVR, ARM, and x86 assembly
 
 </div><div class="resume-section">
 
@@ -34,9 +34,9 @@ I am a professional software developer and amateur electronics tinkerer interest
     Cambridge  
     Massachusetts
 
+ * Developed browser-based mixing board control software using Coffeescript
  * Researched novel techniques for high-quality time stretching of audio
  * Created and expanded tools for musicians on Mac and Windows using C++
- * Developed browser-based mixing board control software using Coffeescript
 
 2008
  ~  Software Intern  
@@ -75,3 +75,10 @@ I am a professional software developer and amateur electronics tinkerer interest
  * Programming Languages (in particular Coq and Haskell)
  * Analog electronic design, especially voltage-controlled and other musical circuits
  * Mathematical Logic, Set Theory, Foundational Math
+
+</div><div class="resume-section">
+
+## MOOCs Completed
+
+ * Principles of Reactive Programming - Coursera (2014, With Distinction)
+ * Machine Learning - `ml-class.org` (2011, 100%)
