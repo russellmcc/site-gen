@@ -33,7 +33,7 @@ myPandocCompiler = pandocCompilerWith myReaderOptions myWriterOptions
                       }
     myReaderOptions = def
                       {
-                        readerExtensions = mconcat (S.insert <$> 
+                        readerExtensions = mconcat (S.insert <$>
                           [ Ext_definition_lists
                           , Ext_multiline_tables
                           , Ext_markdown_in_html_blocks
@@ -50,11 +50,11 @@ main = hakyll $ do
     match "posts/*" $ do
         route   $ setExtension ".html"
         compile $ compileWithTemplate "templates/post.html" (Just "templates/afterpost.html")
-    
+
     match "resume.md" $ do
         route $ setExtension ".html"
         compile $ compileWithTemplate "templates/resume.html" Nothing
-               
+
     match "about.md" $ do
         route $ setExtension ".html"
         compile $ compileWithTemplate "templates/resume.html" Nothing
@@ -64,7 +64,8 @@ main = hakyll $ do
     create ["rss.xml"] $do
       route idRoute
       compile $ do
-        posts <- chronological <$> loadAllSnapshots "posts/*" "content"
+        unsortedPosts <- loadAllSnapshots "posts/*" "content"
+        posts <- chronological unsortedPosts
         fullCtx <- pure (field "description" (pure . itemBody) `mappend` postCtx)
         renderRss feedConfiguration fullCtx posts
 
@@ -78,26 +79,27 @@ main = hakyll $ do
     maybeDoTpl Nothing s = return s
     compileWithTemplate a b = do
         tpl <- loadBody a
-        defaultTpl <- loadBody "templates/default.html"                          
-        myPandocCompiler >>= 
+        defaultTpl <- loadBody "templates/default.html"
+        myPandocCompiler >>=
          doTpl tpl >>=
-         saveSnapshot "content" >>= 
+         saveSnapshot "content" >>=
          maybeDoTpl b >>=
-         doTpl defaultTpl >>= 
+         doTpl defaultTpl >>=
          relativizeUrls
 
-    createListOfPosts ident tpl postSort = 
+    createListOfPosts :: Identifier -> Identifier -> ([Item String] -> Compiler [Item String]) -> Rules ()
+    createListOfPosts ident tpl postSort =
         create [ident] $ do
           route idRoute
-          compile $ 
+          compile $
             makeItem "" >>=
             loadAndApplyTemplate tpl fullCtx >>=
             loadAndApplyTemplate "templates/default.html" fullCtx >>=
             relativizeUrls
         where
           sortedPostList ∷ Compiler [Item String]
-          sortedPostList = postSort <$> loadAll "posts/*"
-          
+          sortedPostList = (loadAll "posts/*") >>= postSort
+
           -- do a (reverse) bind under a monad
           (=<$<) ∷ (Monad m) ⇒ m (a → m b) → m a → m b
           f =<$< b = (b >>=) =<< f
@@ -105,12 +107,12 @@ main = hakyll $ do
 
           allPostBodies ∷ Compiler String
           allPostBodies = applyTemplateList <$>
-                          loadBody "templates/postitem.html" <*> 
-                          pure postCtx =<$< 
+                          loadBody "templates/postitem.html" <*>
+                          pure postCtx =<$<
                           sortedPostList
 
           fullCtx = field "posts" (pure allPostBodies) `mappend` postCtx
-          
+
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
     { feedTitle       = "Russell McClellan"
@@ -139,4 +141,3 @@ processCssCompiler = do
     where doScss a = LBS.pack <$> ((<$>) <$> pure LBSI.c2w <*> (show <$> (getRight [] <$> process (parseOnly styleSheet $ pack a))))
           getRight o (Left _) = o
           getRight _ (Right i) = i
-
