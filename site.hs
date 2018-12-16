@@ -14,7 +14,7 @@ import CssTokenizer
 import Data.Attoparsec.Text (parseOnly)
 import Data.Text (pack)
 import Data.Set as S
-import Text.Pandoc
+import Text.Pandoc hiding (applyTemplate)
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.ByteString.Internal as LBSI
 import Hakyll
@@ -33,7 +33,7 @@ myPandocCompiler = pandocCompilerWith myReaderOptions myWriterOptions
                       }
     myReaderOptions = def
                       {
-                        readerExtensions = mconcat (S.insert <$>
+                        readerExtensions = mconcat (enableExtension <$>
                           [ Ext_definition_lists
                           , Ext_multiline_tables
                           , Ext_markdown_in_html_blocks
@@ -123,7 +123,7 @@ feedConfiguration = FeedConfiguration
     }
 
 
-staticDirs = [ "stylesheets/*.css", "images/*", "resume-russell-mcclellan.pdf" ]
+staticDirs = [ "stylesheets/*.css", "images/*", "resume-russell-mcclellan.pdf", "fonts/*" ]
 
 matchAll patterns comp = sequence $ match <$> patterns <*> pure comp
 
