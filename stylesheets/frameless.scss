@@ -9,10 +9,11 @@
 //
 
 // color
-$sexyred: rgb(211, 41, 67);
-$yellow: rgb(244, 196, 144);
-$pink: rgb(255, 189, 199);
-$bggray: rgb(45,43,45);
+$sexyred: rgb(211, 41, 100);
+$yellow: rgb(214, 166, 160);
+$pink: rgb(218, 200, 209);
+$bggray: rgb(11,11,11);
+$bgtext: rgb(45,48,51);
 
 // These two together form a fixed vertical grid.  in particular, the
 // sub-headings are snapped vertically to a baseline.
@@ -162,18 +163,10 @@ body {
 }
 
 .post, .postpreview, .resume-section, .about-section {
-    background-image: url("/images/divbg.png");
+    background-color: $bgtext;
     margin-top: 1rem;
     padding-bottom: 1rem;
     margin-bottom:1rem;
-}
-
-.disqus {
-    color: $pink;
-    font-family: "Open Sans";
-    padding-top: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
 }
 
 .postpreview {
