@@ -123,7 +123,7 @@ feedConfiguration = FeedConfiguration
     }
 
 
-staticDirs = [ "stylesheets/*.css", "images/*", "resume-russell-mcclellan.pdf", "fonts/*" ]
+staticDirs = [ "stylesheets/*.css", "images/*", "resume-russell-mcclellan.pdf", "fonts/*", "CNAME" ]
 
 matchAll patterns comp = sequence $ match <$> patterns <*> pure comp
 
