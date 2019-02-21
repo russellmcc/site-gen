@@ -8,7 +8,7 @@ img: /images/soundfxbanner.png
 imgalt: HTML oscilloscope UI.
 ---
 
-[Here](http://russellmcc.com/soundfxweb/) is [another emulation](http://www.ghostfact.com/soundfx-machine) of the [Remco soundfx machine](http://www.youtube.com/watch?&v=kokFu2xZt44), this time for HTML5 audio.
+[Here](http://www.russellmcc.com/soundfxweb/) is [another emulation](http://www.ghostfact.com/soundfx-machine) of the [Remco soundfx machine](http://www.youtube.com/watch?&v=kokFu2xZt44), this time for HTML5 audio.
 
 ![screen shot](/images/soundfx_ss.png)
 
