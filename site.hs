@@ -51,13 +51,6 @@ main = hakyll $ do
         route   $ setExtension ".html"
         compile $ compileWithTemplate "templates/post.html" (Just "templates/afterpost.html")
 
-    match "resume.md" $ do
-        route $ setExtension ".html"
-        compile $ compileWithTemplate "templates/resume.html" Nothing
-
-    match "about.md" $ do
-        route $ setExtension ".html"
-        compile $ compileWithTemplate "templates/resume.html" Nothing
 
     createListOfPosts "index.html" "templates/index.html" recentFirst
 
@@ -123,7 +116,7 @@ feedConfiguration = FeedConfiguration
     }
 
 
-staticDirs = [ "stylesheets/*.css", "images/*", "resume-russell-mcclellan.pdf", "fonts/*", "CNAME" ]
+staticDirs = [ "stylesheets/*.css", "images/*", "fonts/*", "CNAME" ]
 
 matchAll patterns comp = sequence $ match <$> patterns <*> pure comp
 

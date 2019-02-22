@@ -13,7 +13,7 @@ $sexyred: rgb(211, 41, 100);
 $yellow: rgb(214, 166, 160);
 $pink: rgb(218, 200, 209);
 $bggray: rgb(11,11,11);
-$bgtext: rgb(45,48,51);
+$bgtext: rgb(26,26,30);
 
 // These two together form a fixed vertical grid.  in particular, the
 // sub-headings are snapped vertically to a baseline.
@@ -27,6 +27,10 @@ $min-heading-lead-bottom: 0.75;
 
 $column: 48;	// The column-width of your grid in pixels
 $gutter: 24;	// The gutter-width of your grid in pixels
+
+$mobile-margin: 0rem;
+$mobile-margin-contact: 1rem;
+$inside-padding: 1rem;
 
 $lambda: $line-height*$font-size;
 $section-padding: $line-height * 2em;
@@ -57,6 +61,13 @@ $section-padding: $line-height * 2em;
 
 @mixin margin-right($cols) {
     margin-right: ($cols * ($column + $gutter)) / $font-size * 1rem;
+}
+
+@mixin mobile-margins {
+    margin-left: $mobile-margin;
+    margin-right: $mobile-margin;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 @mixin rounded-corners($radius) {
@@ -108,9 +119,11 @@ body {
 #contact {
     color: $sexyred;
     @include headfont;
+    margin-left: $mobile-margin-contact;
+    margin-right: $mobile-margin-contact;
+    margin-bottom: 0;
     font-size: .8rem;
-    @include width(4);
-    margin: 0 auto;
+    margin-top: 1rem;
     text-align: right;
     z-index: -1;
 }
@@ -123,8 +136,7 @@ body {
 }
 
 #content {
-    @include width(4);
-    margin: 0 auto;
+    @include mobile-margins;
 }
 
 #navbar {
@@ -133,11 +145,13 @@ body {
     font-size: 1rem;
     text-align: justify;
     margin-top: 1em;
+    margin-left: $mobile-margin-contact;
+    margin-right: $mobile-margin-contact;
     line-height: 0em;
 }
 
 #navbar ul {
-    line-height: 1rem;
+    line-height: 0;
     list-style-type: none;
 }
 
@@ -166,7 +180,14 @@ body {
     background-color: $bgtext;
     margin-top: 1rem;
     padding-bottom: 1rem;
+    padding-left: $inside-padding;
+    padding-right: $inside-padding;
+    padding-top: 0.75rem;
     margin-bottom:1rem;
+}
+
+.post-title {
+    padding-top: 0.5rem;
 }
 
 .postpreview {
@@ -193,7 +214,6 @@ body {
     @include preview;
     font-size: 2rem;
     margin-bottom: .3rem;
-    margin-left: .3rem;
 }
 
 .postpreview-title,
@@ -202,9 +222,7 @@ body {
 .resume h2 {
     @include preview;
     font-size: 1.5rem;
-    text-align: center;
-    padding: 0 .2rem;
-    padding-top: 1rem;
+    padding-bottom: 0;
     margin-top: .3rem;
     margin-bottom: .3rem;
 }
@@ -215,7 +233,6 @@ body {
 .post h3,
 .resume dt {
     @include preview;
-    margin-left: .2rem;
     font-size: 1rem;
 }
 
@@ -273,7 +290,7 @@ body {
 .previewtext {
     @include posttext;
     width: 95%;
-    padding: 0 2.5%;
+    padding: 0 1rem;
 }
 
 .previewtext:after {
@@ -286,9 +303,16 @@ body {
 .post dd
 {
     @include posttext;
-    width: 95%;;
     margin-top: 1rem;
-    padding: 0 2.5%;
+    padding: 0;
+}
+
+.post p:first-child,
+.post ul:first-child,
+.post dt:first-child,
+.post dd:first-child
+{
+    margin-top: 0;
 }
 
 .post a,
@@ -343,8 +367,9 @@ body {
 }
 
 .post img {
-    @include width(3);
-    margin: 1em auto;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0
     display: block;
 }
 
@@ -361,10 +386,13 @@ body {
 @media (min-width: 30em) {
 
     #content {
+        margin: 0 auto;
         @include width(6);
     }
 
     #contact {
+        margin: 0 auto;
+        margin-top: 1rem;
         @include width(6);
     }
 
@@ -391,10 +419,6 @@ body {
         margin: 1em 0;
         @include width(4);
         @include padding-left(1);
-    }
-
-    .post img {
-        @include width(4);
     }
 }
 
@@ -423,7 +447,6 @@ body {
     .resume h2 {
         text-align: left;
         padding: 0rem .3rem;
-        padding-top: 1rem;
     }
 
     .post dt {
