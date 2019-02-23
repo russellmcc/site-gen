@@ -4,6 +4,7 @@ module Main where
 import Prelude hiding (id, foldr, elem, sum)
 import Control.Category (id)
 import Data.Monoid (mempty, mconcat, mappend)
+import Data.String (fromString)
 import Control.Applicative
 import Data.Maybe
 import Data.List hiding (foldr, elem, sum)
@@ -17,7 +18,9 @@ import Data.Set as S
 import Text.Pandoc hiding (applyTemplate)
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.ByteString.Internal as LBSI
+import System.FilePath.Posix (takeBaseName, splitPath, joinPath)
 import Hakyll
+import Debug.Trace (trace)
 
 postCtx ∷ Context String
 postCtx = mconcat [ dateField "date-human" "%B %e, %Y",
@@ -40,20 +43,67 @@ myPandocCompiler = pandocCompilerWith myReaderOptions myWriterOptions
                           ]) strictExtensions
                       }
 
+compileWithTemplate a b comp = do
+  tpl <- loadBody a
+  defaultTpl <- loadBody "templates/default.html"
+  comp >>=
+       doTpl tpl >>=
+       saveSnapshot "content" >>=
+       maybeDoTpl b >>=
+       doTpl defaultTpl >>=
+       relativizeUrls
+  where
+    doTpl t = applyTemplate t postCtx
+    maybeDoTpl (Just t) s = do
+      tpl <- loadBody t
+      doTpl tpl s
+    maybeDoTpl Nothing s = return s
+
+
+-- TODO run build script
+doGen :: String -> IO ()
+doGen _ = pure ()
+
+dropNFolders n x = joinPath $ Data.List.drop n $ splitPath x
+
+genPost :: Identifier -> Rules ()
+genPost i = let
+  postName = takeBaseName $ toFilePath i
+  patt = (fromString $ "gen/" <> postName <> "/**") .&&. (complement $ fromString $ "gen/" <> postName <> "/dist/*")
+  in do
+    pattD <- makePatternDependency patt
+    rulesExtraDependencies [pattD, IdentifierDependency i] $ do
+        create [fromString $ "gen/" <> postName <> "/build/index.html"] $ do
+            preprocess $ doGen $ "gen/" <> postName
+            compile getResourceBody
+        match (fromString $ "gen/" <> postName <> "/build/static/**") $ do
+            route $ customRoute (\x -> "posts/" <> postName <> "/static/" <>
+                                       (dropNFolders 4 $ toFilePath x))
+            compile $ copyFileCompiler
+        match (Hakyll.fromList [i]) $ do
+            route $ customRoute (\_ -> "posts/" <> postName <> "/index.html")
+            compile $ compileWithTemplate "templates/post.html"
+                      (Just "templates/afterpost.html")
+                      ((load $ fromFilePath $ "gen/" <> postName <> "/build/index.html") >>= (makeItem . itemBody))
+
 main :: IO ()
 main = hakyll $ do
-
-    staticCopy
     cssProcess
+    staticCopy
+
+    postsToGen <- ((fst <$>) . (Data.List.filter (hasGen . snd))) <$> getAllMetadata "posts/*"
+    sequence $ genPost <$> postsToGen
 
     -- Render posts
-    match "posts/*" $ do
+    matchMetadata "posts/*" noGen $ do
         route   $ setExtension ".html"
-        compile $ compileWithTemplate "templates/post.html" (Just "templates/afterpost.html")
+        compile $ compilePost
 
+    match "templates/*" $ compile templateCompiler
 
     createListOfPosts "index.html" "templates/index.html" recentFirst
 
+    -- TODO use metadata of post for description
     create ["rss.xml"] $do
       route idRoute
       compile $ do
@@ -62,32 +112,21 @@ main = hakyll $ do
         fullCtx <- pure (field "description" (pure . itemBody) `mappend` postCtx)
         renderRss feedConfiguration fullCtx posts
 
-    match "templates/*" $ compile templateCompiler
-
   where
-    doTpl t = applyTemplate t postCtx
-    maybeDoTpl (Just t) s = do
-                  tpl <- loadBody t
-                  doTpl tpl s
-    maybeDoTpl Nothing s = return s
-    compileWithTemplate a b = do
-        tpl <- loadBody a
-        defaultTpl <- loadBody "templates/default.html"
-        myPandocCompiler >>=
-         doTpl tpl >>=
-         saveSnapshot "content" >>=
-         maybeDoTpl b >>=
-         doTpl defaultTpl >>=
-         relativizeUrls
+
+    hasGen m = isJust $ lookupString "gen" m
+    noGen m = isNothing $ lookupString "gen" m
+
+    compilePost = compileWithTemplate "templates/post.html" (Just "templates/afterpost.html") myPandocCompiler
 
     createListOfPosts :: Identifier -> Identifier -> ([Item String] -> Compiler [Item String]) -> Rules ()
     createListOfPosts ident tpl postSort =
         create [ident] $ do
           route idRoute
           compile $
-            makeItem "" >>=
-            loadAndApplyTemplate tpl fullCtx >>=
-            loadAndApplyTemplate "templates/default.html" fullCtx >>=
+            allPostBodies >>= makeItem >>=
+            loadAndApplyTemplate tpl postCtx >>=
+            loadAndApplyTemplate "templates/default.html" postCtx >>=
             relativizeUrls
         where
           sortedPostList ∷ Compiler [Item String]
@@ -104,7 +143,6 @@ main = hakyll $ do
                           pure postCtx =<$<
                           sortedPostList
 
-          fullCtx = field "posts" (pure allPostBodies) `mappend` postCtx
 
 feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
@@ -124,7 +162,7 @@ staticCopy = matchAll staticDirs $ do
                route idRoute
                compile copyFileCompiler
 
-cssProcess = match "**.scss" $ do
+cssProcess = match "stylesheets/*.scss" $ do
                route $ setExtension "css"
                compile processCssCompiler
 
