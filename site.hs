@@ -28,20 +28,20 @@ postCtx = mconcat [ dateField "date-human" "%B %e, %Y",
                     defaultContext
                   ]
 
+myWriterOptions = def
+                  { writerHTMLMathMethod = MathJax ""
+                  }
+myReaderOptions = def
+                  {
+                    readerExtensions = mconcat (enableExtension <$>
+                      [ Ext_definition_lists
+                      , Ext_multiline_tables
+                      , Ext_markdown_in_html_blocks
+                      ]) strictExtensions
+                  }
+
 myPandocCompiler ∷ Compiler (Item String)
 myPandocCompiler = pandocCompilerWith myReaderOptions myWriterOptions
-  where
-    myWriterOptions = def
-                      { writerHTMLMathMethod = MathJax ""
-                      }
-    myReaderOptions = def
-                      {
-                        readerExtensions = mconcat (enableExtension <$>
-                          [ Ext_definition_lists
-                          , Ext_multiline_tables
-                          , Ext_markdown_in_html_blocks
-                          ]) strictExtensions
-                      }
 
 compileWithTemplate a b comp = do
   tpl <- loadBody a
@@ -71,6 +71,7 @@ genPost i = let
   postName = takeBaseName $ toFilePath i
   patt = (fromString $ "gen/" <> postName <> "/**") .&&. (complement $ fromString $ "gen/" <> postName <> "/dist/*")
   in do
+    -- TODO: refactor to have a dummy item representing the gen step
     pattD <- makePatternDependency patt
     rulesExtraDependencies [pattD, IdentifierDependency i] $ do
         create [fromString $ "gen/" <> postName <> "/build/index.html"] $ do
@@ -85,6 +86,14 @@ genPost i = let
             compile $ compileWithTemplate "templates/post.html"
                       (Just "templates/afterpost.html")
                       ((load $ fromFilePath $ "gen/" <> postName <> "/build/index.html") >>= (makeItem . itemBody))
+
+renderDescription :: Context String
+renderDescription = field "description" go where
+  go :: Item String -> Compiler String
+  go i = maybe (pure $ itemBody i) (doRender i) =<< (lookupString "description" <$> (getMetadata $ itemIdentifier i))
+  doRender :: Item String -> String -> Compiler String
+  doRender i s = itemBody <$> (renderPandocWith myReaderOptions myWriterOptions $
+                               Item (itemIdentifier i) s)
 
 main :: IO ()
 main = hakyll $ do
@@ -103,14 +112,12 @@ main = hakyll $ do
 
     createListOfPosts "index.html" "templates/index.html" recentFirst
 
-    -- TODO use metadata of post for description
     create ["rss.xml"] $do
       route idRoute
       compile $ do
         unsortedPosts <- loadAllSnapshots "posts/*" "content"
         posts <- chronological unsortedPosts
-        fullCtx <- pure (field "description" (pure . itemBody) `mappend` postCtx)
-        renderRss feedConfiguration fullCtx posts
+        renderRss feedConfiguration (renderDescription <> postCtx) posts
 
   where
 
