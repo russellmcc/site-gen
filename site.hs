@@ -61,8 +61,10 @@ compileWithTemplate a b comp = do
 
 
 -- TODO run build script
-doGen :: String -> IO ()
-doGen _ = pure ()
+doGen :: String -> Compiler (Item String)
+doGen s = (unsafeCompiler doGen') >> makeItem "" where
+  doGen' :: IO ()
+  doGen' = putStrLn $ "COMPILING:" <> s
 
 dropNFolders n x = joinPath $ Data.List.drop n $ splitPath x
 
@@ -70,22 +72,27 @@ genPost :: Identifier -> Rules ()
 genPost i = let
   postName = takeBaseName $ toFilePath i
   patt = (fromString $ "gen/" <> postName <> "/**") .&&. (complement $ fromString $ "gen/" <> postName <> "/dist/*")
+  dummyI = fromFilePath $ "dummy-gen-" <> postName
   in do
     -- TODO: refactor to have a dummy item representing the gen step
     pattD <- makePatternDependency patt
     rulesExtraDependencies [pattD, IdentifierDependency i] $ do
+        create [dummyI] $ do
+            compile $ doGen postName
+
+    rulesExtraDependencies [IdentifierDependency dummyI] $ do
         create [fromString $ "gen/" <> postName <> "/build/index.html"] $ do
-            preprocess $ doGen $ "gen/" <> postName
             compile getResourceBody
         match (fromString $ "gen/" <> postName <> "/build/static/**") $ do
             route $ customRoute (\x -> "posts/" <> postName <> "/static/" <>
                                        (dropNFolders 4 $ toFilePath x))
             compile $ copyFileCompiler
-        match (Hakyll.fromList [i]) $ do
-            route $ customRoute (\_ -> "posts/" <> postName <> "/index.html")
-            compile $ compileWithTemplate "templates/post.html"
-                      (Just "templates/afterpost.html")
-                      ((load $ fromFilePath $ "gen/" <> postName <> "/build/index.html") >>= (makeItem . itemBody))
+
+    match (Hakyll.fromList [i]) $ do
+        route $ customRoute (\_ -> "posts/" <> postName <> "/index.html")
+        compile $ compileWithTemplate "templates/post.html"
+                  (Just "templates/afterpost.html")
+                  ((load $ fromFilePath $ "gen/" <> postName <> "/build/index.html") >>= (makeItem . itemBody))
 
 renderDescription :: Context String
 renderDescription = field "description" go where
