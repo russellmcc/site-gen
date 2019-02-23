@@ -71,7 +71,7 @@ dropNFolders n x = joinPath $ Data.List.drop n $ splitPath x
 genPost :: Identifier -> Rules ()
 genPost i = let
   postName = takeBaseName $ toFilePath i
-  patt = (fromString $ "gen/" <> postName <> "/**") .&&. (complement $ fromString $ "gen/" <> postName <> "/dist/*")
+  patt = (fromString $ "gen/" <> postName <> "/**") .&&. (complement $ fromString $ "gen/" <> postName <> "/build/*")
   dummyI = fromFilePath $ "dummy-gen-" <> postName
   in do
     -- TODO: refactor to have a dummy item representing the gen step
