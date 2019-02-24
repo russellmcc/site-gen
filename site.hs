@@ -64,38 +64,50 @@ compileWithTemplate a b comp = do
 
 
 -- TODO run build script
-doGen :: String -> IO [Identifier]
+doGen :: String -> IO ()
 doGen s = (putStrLn $ "COMPILING:" <> s) >>
           (readCreateProcess ((proc "npm" ["install"]){ cwd = Just $ "gen/" <> s }) "") >>
-          (G.glob $ "gen/" <> s <> "/build/static/**/*") >>=
-          filterM doesFileExist >>= \fps ->
-          pure (fromFilePath <$> ("d" <>) <$> fps)
-
+          pure ()
 
 dropNFolders n x = joinPath $ Data.List.drop n $ splitPath x
 
 genPost :: Identifier -> Rules ()
 genPost i = let
   postName = takeBaseName $ toFilePath i
-  patt = (fromString $ "gen/" <> postName <> "/**")
+  pattStatic = (fromString $ "gen/" <> postName <> "/static/**")
+  pattNode = (fromString $ "gen/" <> postName <> "/node_modules/**")
+  pattBuild = (fromString $ "gen/" <> postName <> "/build/**")
+  pattIdyll = (fromString $ "gen/" <> postName <> "/.idyll/**")
+  patt = (fromString $ "gen/" <> postName <> "/**") .&&. (complement (pattStatic .||. pattNode .||. pattBuild .||. pattIdyll))
   indexFile = "gen/" <> postName <> "/build/index.html"
+  jsFile = "gen/" <> postName <> "/build/static/index.js"
+  loadIndex :: Compiler (Item String)
+  loadIndex = load $ fromFilePath $ indexFile
   in do
-    pattD <- makePatternDependency patt
-    rulesExtraDependencies [pattD] $ do
-        staticData <- preprocess $ doGen postName
-        create [fromString $ "dummy" <> indexFile] $ do
-            compile $ (unsafeCompiler (readFile indexFile)) >>= makeItem
+    match pattStatic $ do
+        route $ customRoute (\x -> "posts/" <> postName <> "/static/" <>
+                             (dropNFolders 3 $ toFilePath x))
+        compile $ copyFileCompiler
 
-        create staticData $ do
-           route $ customRoute (\x -> "posts/" <> postName <> "/static/" <>
-                                (dropNFolders 4 $ toFilePath x))
-           compile $ getUnderlying >>= \i -> makeItem $ CopyFile $ Data.List.drop 1 (toFilePath i)
+    match patt $ do
+        compile $ copyFileCompiler
 
-        match (Hakyll.fromList [i]) $ do
-            route $ customRoute (\_ -> "posts/" <> postName <> "/index.html")
-            compile $ compileWithTemplate "templates/post-gen.html"
-                      (Just "templates/afterpost.html")
-                      ((load $ fromFilePath $ "dummy" <> indexFile) >>= (makeItem . itemBody))
+    create [fromString $ indexFile] $ do
+        compile $ getMatches patt >>= \is ->
+                  sequence ((load <$> is) :: [Compiler (Item CopyFile)]) >>
+                  (unsafeCompiler $ doGen postName) >>
+                  (unsafeCompiler $ readFile indexFile) >>=
+                  makeItem
+
+    create [fromString jsFile] $ do
+        route $ customRoute (\_ -> "posts/" <> postName <> "/static/index.js")
+        compile $ (loadIndex) >> (unsafeCompiler (readFile jsFile)) >>= makeItem
+
+    match (Hakyll.fromList [i]) $ do
+        route $ customRoute (\_ -> "posts/" <> postName <> "/index.html")
+        compile $ compileWithTemplate "templates/post-gen.html"
+                  (Just "templates/afterpost.html")
+                  (loadIndex >>= (makeItem . itemBody))
 
 renderDescription :: Context String
 renderDescription = field "description" go where
@@ -110,7 +122,9 @@ renderDescription = field "description" go where
 config = defaultConfiguration {
            ignoreFile = \p ->
                         (matches (fromString "**/build/**") (fromFilePath p)) ||
-                        (matches (fromString "**/.idyll/**") (fromFilePath p))
+                        (matches (fromString "**/.idyll/**") (fromFilePath p)) ||
+                        (matches (fromString ".idyll") (fromFilePath p)) ||
+                        (matches (fromString "build") (fromFilePath p))
          }
 
 main :: IO ()
