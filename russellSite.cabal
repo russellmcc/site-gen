@@ -7,6 +7,6 @@ build-type:     Simple
 cabal-version:  >= 1.2
 
 executable site
-  build-depends:  base, bytestring, text, attoparsec, parsec, transformers, containers, hakyll > 4, pandoc, filepath
+  build-depends:  base, bytestring, text, attoparsec, parsec, transformers, containers, hakyll == 4.12.5.0, pandoc, filepath, process, Glob, directory
   main-is:        Site.hs
   other-modules: CssProcess, CssTokenizer, Util

@@ -21,6 +21,9 @@ import qualified Data.ByteString.Internal as LBSI
 import System.FilePath.Posix (takeBaseName, splitPath, joinPath)
 import Hakyll
 import Debug.Trace (trace)
+import System.Process
+import System.Directory (doesFileExist)
+import qualified System.FilePath.Glob as G
 
 postCtx ∷ Context String
 postCtx = mconcat [ dateField "date-human" "%B %e, %Y",
@@ -61,38 +64,38 @@ compileWithTemplate a b comp = do
 
 
 -- TODO run build script
-doGen :: String -> Compiler (Item String)
-doGen s = (unsafeCompiler doGen') >> makeItem "" where
-  doGen' :: IO ()
-  doGen' = putStrLn $ "COMPILING:" <> s
+doGen :: String -> IO [Identifier]
+doGen s = (putStrLn $ "COMPILING:" <> s) >>
+          (readCreateProcess ((proc "npm" ["install"]){ cwd = Just $ "gen/" <> s }) "") >>
+          (G.glob $ "gen/" <> s <> "/build/static/**/*") >>=
+          filterM doesFileExist >>= \fps ->
+          pure (fromFilePath <$> ("d" <>) <$> fps)
+
 
 dropNFolders n x = joinPath $ Data.List.drop n $ splitPath x
 
 genPost :: Identifier -> Rules ()
 genPost i = let
   postName = takeBaseName $ toFilePath i
-  patt = (fromString $ "gen/" <> postName <> "/**") .&&. (complement $ fromString $ "gen/" <> postName <> "/build/*")
-  dummyI = fromFilePath $ "dummy-gen-" <> postName
+  patt = (fromString $ "gen/" <> postName <> "/**")
+  indexFile = "gen/" <> postName <> "/build/index.html"
   in do
-    -- TODO: refactor to have a dummy item representing the gen step
     pattD <- makePatternDependency patt
-    rulesExtraDependencies [pattD, IdentifierDependency i] $ do
-        create [dummyI] $ do
-            compile $ doGen postName
+    rulesExtraDependencies [pattD] $ do
+        staticData <- preprocess $ doGen postName
+        create [fromString $ "dummy" <> indexFile] $ do
+            compile $ (unsafeCompiler (readFile indexFile)) >>= makeItem
 
-    rulesExtraDependencies [IdentifierDependency dummyI] $ do
-        create [fromString $ "gen/" <> postName <> "/build/index.html"] $ do
-            compile getResourceBody
-        match (fromString $ "gen/" <> postName <> "/build/static/**") $ do
-            route $ customRoute (\x -> "posts/" <> postName <> "/static/" <>
-                                       (dropNFolders 4 $ toFilePath x))
-            compile $ copyFileCompiler
+        create staticData $ do
+           route $ customRoute (\x -> "posts/" <> postName <> "/static/" <>
+                                (dropNFolders 4 $ toFilePath x))
+           compile $ getUnderlying >>= \i -> makeItem $ CopyFile $ Data.List.drop 1 (toFilePath i)
 
-    match (Hakyll.fromList [i]) $ do
-        route $ customRoute (\_ -> "posts/" <> postName <> "/index.html")
-        compile $ compileWithTemplate "templates/post.html"
-                  (Just "templates/afterpost.html")
-                  ((load $ fromFilePath $ "gen/" <> postName <> "/build/index.html") >>= (makeItem . itemBody))
+        match (Hakyll.fromList [i]) $ do
+            route $ customRoute (\_ -> "posts/" <> postName <> "/index.html")
+            compile $ compileWithTemplate "templates/post.html"
+                      (Just "templates/afterpost.html")
+                      ((load $ fromFilePath $ "dummy" <> indexFile) >>= (makeItem . itemBody))
 
 renderDescription :: Context String
 renderDescription = field "description" go where
@@ -102,8 +105,16 @@ renderDescription = field "description" go where
   doRender i s = itemBody <$> (renderPandocWith myReaderOptions myWriterOptions $
                                Item (itemIdentifier i) s)
 
+
+
+config = defaultConfiguration {
+           ignoreFile = \p ->
+                        (matches (fromString "**/build/**") (fromFilePath p)) ||
+                        (matches (fromString "**/.idyll/**") (fromFilePath p))
+         }
+
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith config $ do
     cssProcess
     staticCopy
 
