@@ -93,7 +93,7 @@ genPost i = let
 
         match (Hakyll.fromList [i]) $ do
             route $ customRoute (\_ -> "posts/" <> postName <> "/index.html")
-            compile $ compileWithTemplate "templates/post.html"
+            compile $ compileWithTemplate "templates/post-gen.html"
                       (Just "templates/afterpost.html")
                       ((load $ fromFilePath $ "dummy" <> indexFile) >>= (makeItem . itemBody))
 
