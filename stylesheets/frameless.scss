@@ -175,7 +175,7 @@ body {
     content: '';
 }
 
-.post, .idyll-text-container, .postpreview, .resume-section, .about-section {
+.post, .idyll-text-container, .postpreview, .post-title, .resume-section, .about-section {
     background-color: $bgtext;
     margin-top: 1rem;
     padding-bottom: 1rem;
@@ -185,17 +185,9 @@ body {
     margin-bottom:1rem;
 }
 
-.post-title {
-    padding-top: 0.5rem;
-}
-
-.postpreview {
+.postpreview, .post-title {
     background-size: cover;
     display:block;
-}
-
-.postpreview time {
-    text-align: center;
 }
 
 .hidden-author {
@@ -216,6 +208,7 @@ body {
 }
 
 .postpreview-title,
+.post-title > h1,
 .postpreview h2,
 .post h2,
 .idyll-text-container h2,
@@ -238,7 +231,9 @@ body {
     text-align: left;
 }
 
-.postpreview time, .postpreview-title {
+.postpreview time,
+.post time,
+.postpreview-title {
     color:$sexyred;
     display:block;
 }
@@ -421,6 +416,7 @@ body {
 
     .about-section h3,
     .post time,
+    .postpreview time,
     .idyll-text-container time,
     .postpreview h3,
     .post h3,
