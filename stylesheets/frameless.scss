@@ -175,7 +175,7 @@ body {
     content: '';
 }
 
-.post, .idyll-text-container, .postpreview, .post-title, .resume-section, .about-section {
+.post, .postpreview, .post-title, .resume-section, .about-section {
     background-color: $bgtext;
     margin-top: 1rem;
     padding-bottom: 1rem;
@@ -211,7 +211,6 @@ body {
 .post-title > h1,
 .postpreview h2,
 .post h2,
-.idyll-text-container h2,
 .resume h2 {
     @include preview;
     font-size: 1.5rem;
@@ -224,7 +223,6 @@ body {
 .post time,
 .resume h3,
 .post h3,
-.idyll-text-container h3,
 .resume dt {
     @include preview;
     font-size: 0.8rem;
@@ -264,9 +262,7 @@ body {
     clear: both;
 }
 
-.postpreview hr,
-.post hr
-.idyll-text-container hr
+hr
 {
     height: 1px;
     background-color: rgba(255,189,199, .22);
@@ -296,13 +292,10 @@ body {
 }
 
 .post p,
+.post span,
 .post ul,
 .post dt,
-.post dd,
-.idyll-text-container p,
-.idyll-text-container ul,
-.idyll-text-container dt,
-.idyll-text-container dd
+.post dd
 {
     @include posttext;
     margin-top: 1rem;
@@ -310,13 +303,10 @@ body {
 }
 
 .post p:first-child,
+.post span:first-child,
 .post ul:first-child,
 .post dt:first-child,
-.post dd:first-child,
-.idyll-text-container  p:first-child,
-.idyll-text-container ul:first-child,
-.idyll-text-container dt:first-child,
-.idyll-text-container dd:first-child
+.post dd:first-child
 {
     margin-top: 0;
 }
@@ -326,6 +316,12 @@ body {
 {
     @include posttext;
     color: $sexyred;
+}
+
+.post .idyll-dynamic
+{
+    color: $sexyred;
+    cursor: default;
 }
 
 .resume p, .resume li
@@ -372,8 +368,7 @@ body {
     display: block;
 }
 
-.post img,
-.idyll-text-container img {
+.post img {
     width: 100%;
     margin-left: 0;
     margin-right: 0
@@ -417,10 +412,8 @@ body {
     .about-section h3,
     .post time,
     .postpreview time,
-    .idyll-text-container time,
     .postpreview h3,
-    .post h3,
-    .idyll-text-container h3 {
+    .post h3 {
         @include padding-left(1);
     }
 
@@ -453,20 +446,19 @@ body {
     }
 
     .post h2,
-    .idyll-text-container h2
     .postpreview h2,
     .resume h2 {
         text-align: left;
     }
 
-    .post dt, .idyll-text-container dt{
+    .post dt {
         float: left;
         @include width(1.8);
         padding-left: .5em;
         padding-right: .5em;
         clear: both;
     }
-    .post dd, .idyll-text-container dd {
+    .post dd {
         float: right;
         padding-bottom: 1rem;
         padding-top: 0;
@@ -474,7 +466,7 @@ body {
         @include width(5.5);
     }
 
-    .post dl:after idyll-text-container dl {
+    .post dl:after {
         @include clear-after;
     }
 

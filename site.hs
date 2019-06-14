@@ -77,10 +77,10 @@ genPost i = let
   pattStatic = (fromString $ "gen/" <> postName <> "/static/**")
   pattNode = (fromString $ "gen/" <> postName <> "/node_modules/**")
   pattBuild = (fromString $ "gen/" <> postName <> "/build/**")
-  pattIdyll = (fromString $ "gen/" <> postName <> "/.idyll/**")
-  patt = (fromString $ "gen/" <> postName <> "/**") .&&. (complement (pattStatic .||. pattNode .||. pattBuild .||. pattIdyll))
+  pattGit = (fromString $ "gen/" <> postName <> "/.git/**")
+  patt = (fromString $ "gen/" <> postName <> "/src/*") .&&. (complement (pattStatic .||. pattNode .||. pattBuild .||. pattGit))
   indexFile = "gen/" <> postName <> "/build/index.html"
-  jsFile = "gen/" <> postName <> "/build/static/index.js"
+  jsFile = "gen/" <> postName <> "/build/index.js"
   loadIndex :: Compiler (Item String)
   loadIndex = load $ fromFilePath $ indexFile
   in do
@@ -100,7 +100,7 @@ genPost i = let
                   makeItem
 
     create [fromString jsFile] $ do
-        route $ customRoute (\_ -> "posts/" <> postName <> "/static/index.js")
+        route $ customRoute (\_ -> "posts/" <> postName <> "/index.js")
         compile $ (loadIndex) >> (unsafeCompiler (readFile jsFile)) >>= makeItem
 
     match (Hakyll.fromList [i]) $ do
