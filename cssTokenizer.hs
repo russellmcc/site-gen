@@ -104,7 +104,7 @@ showNum = showPropFrac . properFraction
                                           False -> show a ++ (tail $ show b)
 
 noSpaces = [CssColon]
-identSuffix x = case x `elem` noSpaces of
+identSuffix x = case x `Data.Foldable.elem` noSpaces of
                    True → ""
                    False → " "
 
