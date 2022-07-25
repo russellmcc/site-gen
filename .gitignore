@@ -22,3 +22,5 @@ _*
 /resume/resume-full.tex
 /flycheck-cssProcess.hers
 .stack-work
+dist-newstyle
+node_modules

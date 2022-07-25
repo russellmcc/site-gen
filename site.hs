@@ -142,6 +142,10 @@ main = hakyllWith config $ do
 
     match "templates/*" $ compile templateCompiler
 
+    match "resume.md" $ do
+        route $ setExtension ".html"
+        compile $ compileWithTemplate "templates/resume.html" Nothing myPandocCompiler
+
     createListOfPosts "index.html" "templates/index.html" recentFirst
 
     create ["rss.xml"] $do
@@ -193,7 +197,7 @@ feedConfiguration = FeedConfiguration
     }
 
 
-staticDirs = [ "stylesheets/*.css", "images/*", "fonts/*", "CNAME" ]
+staticDirs = [ "stylesheets/*.css", "images/*", "fonts/*", "CNAME", "resume-russell-mcclellan.pdf" ]
 
 matchAll patterns comp = sequence $ match <$> patterns <*> pure comp
 

@@ -1,0 +1,48 @@
+name: Continuous Deployment
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v1
+
+    - name: 🔑 Cache Key
+      id: cache_key
+      run: echo ::set-output name=key::$(md5sum stack.yaml | awk '{print $1}')
+
+    - name: 💾 Cache Dependencies
+      id: cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.stack
+        key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
+
+    - name: 🏷️ Variables
+      id: variables
+      run: |
+        echo ::set-output name=pkg_name::$(cat *.cabal | grep "name:" | sed "s/name:\s*\(.*\)/\1/")
+
+    - name: 🔨 Build
+      run: |
+        stack --no-terminal run build
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      if: ${{ github.ref == 'refs/heads/main' }}
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./_site
+        external_repository: russellmcc/russellmcc.github.com
+        publish_branch: main
+        deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}

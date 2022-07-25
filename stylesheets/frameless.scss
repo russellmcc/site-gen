@@ -225,7 +225,9 @@ body {
 .post h3,
 .resume dt {
     @include preview;
-    font-size: 0.8rem;
+    font-size: 1.2rem;
+    margin-top: .3rem;
+    margin-bottom: .3rem;
     text-align: left;
 }
 
@@ -340,7 +342,7 @@ hr
 }
 
 .resume p {
-    margin: 0 1em;
+    margin: 0.6em 1em;
     line-height: 1.6em;
 }
 
@@ -350,16 +352,11 @@ hr
 }
 
 .resume ul {
-    list-style-type: none;
     margin-bottom: .8rem;
 }
 
 .resume a {
    text-decoration: underline;
-}
-
-.resume .pdflink {
-    @include margin-left(1);
 }
 
 .postpreview img {

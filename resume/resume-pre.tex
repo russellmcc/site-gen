@@ -25,8 +25,8 @@
 \usepackage{xunicode}
 \usepackage{xltxtra}
 \defaultfontfeatures{Mapping=tex-text}
-\setromanfont {Futura}
-\setmonofont[Scale=0.8]{Ubuntu}
+\setromanfont {SF Pro Text}
+\setmonofont {SF Pro Text}
 
 % ---- CUSTOM COMMANDS
 \chardef\&="E050
@@ -51,8 +51,8 @@
 % HEADINGS
 \usepackage{sectsty} 
 \usepackage[normalem]{ulem} 
-\sectionfont{\mdseries\upshape\LARGE}
-\subsectionfont{\mdseries\upshape\Large} 
+\sectionfont{\mdseries\upshape\Large}
+\subsectionfont{\mdseries\upshape\large} 
 \subsubsectionfont{\mdseries\upshape\large} 
 
 % PDF SETUP
@@ -64,6 +64,9 @@
 	pdfproducer={http://nitens.org/taraborelli/cvtex}
 ]{hyperref}  
 \hypersetup{linkcolor=blue,citecolor=blue,filecolor=black,urlcolor=blue} 
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 % DOCUMENT
 \pagestyle{empty}
