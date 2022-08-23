@@ -16,34 +16,6 @@ This project is an attempt to show that distributing widgets without jQuery does
 
 </div><div class="post">
 
-## live demo
-
-<link rel='stylesheet' href='http://www.russellmcc.com/knobjs/knobjs.css'>
-<script src="http://www.russellmcc.com/knobjs/knob.min.js"></script>
-<x-knobjs-knob id="knob"></x-knobjs-knob>
-<input id="input" style="vertical-align:top;">
-<script type="text/javascript">
-  window.onload = function(){
-    var knob = document.getElementById("knob");
-    var input = document.getElementById("input");
-    knob.onchange = function(){
-      input.value = ~~knob.value;
-    }
-    input.onchange = function(){
-      knob.value = ~~input.value;
-    }
-    input.value = knob.value;
-  }
-</script>
-
-</div><div class="post">
-
-## live demo code
-
-<script src="https://gist.github.com/russellmcc/8760316.js"></script>
-
-</div><div class="post">
-
 ## technical details
 
 The project uses google's [polymer platform](https://github.com/polymer/platform) to polyfill some [web component](http://www.w3.org/TR/components-intro/) features.  For now, it requires some non-semantic markup (i.e. the `<x-knobjs-knob>` tag is presentational and not semantic), but that will change once browsers start supporting the [shadow DOM](http://w3c.github.io/webcomponents/spec/shadow/) in earnest.  In the future, I'm hoping `knob.js` can simply become an alternate shadow-dom for the `<input type='range'>` element.

@@ -41,8 +41,6 @@ One feature I would have really enjoyed while writing this library is a way of c
 
 ## 1
 
-Promises/A+ defines one operation for promises, called `then`.  Brian McKenna points out that this is similar to a "return-type" overload of `fmap` and `bind`.  In fact, ignoring the error path, the Promises/A+ `then` is equivalent to `bind` in the sense that given one, you can write the other:
-
-<script src="https://gist.github.com/russellmcc/8497511.js"></script>
+Promises/A+ defines one operation for promises, called `then`.  Brian McKenna points out that this is similar to a "return-type" overload of `fmap` and `bind`.  In fact, ignoring the error path, the Promises/A+ `then` is equivalent to `bind` in the sense that given one, you can write the other.
 
 Promises/A+ are actually a little more expressive than a monad, in that they have rich operations for error catching in addition to the operations required by the monad structure.  One of the authors of the specification [claims](https://github.com/promises-aplus/promises-spec/issues/94#issuecomment-16176966) that to ignore or abstract away this extra structure is to "miss the point of promises".  Regardless, the specification seems to share much with [Scala Futures](http://www.scala-lang.org/api/current/index.html#scala.concurrent.Future), and whether the authors like it or not, promises as specified are monads.
