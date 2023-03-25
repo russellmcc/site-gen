@@ -107,6 +107,7 @@ I've been responsible for technical design of important systems that enabled tea
 
 ## Conference Presentations
 
+ * [Case Study: Eliminating C++ Undefined Behavior, Plug-in Contract Violation, Intel Assumptions in a Legacy Codebase](https://www.youtube.com/watch?v=pjsogsnta4o) Audio Developer Conference 2022
  * [A Practical Perspective on Deep Learning in Audio Software](https://www.youtube.com/watch?v=fGuT9zoQ_JA) Audio Developer Conference 2019
  * "Machine Learning and Music Information Retrieval in the Audio Industry" - Moogfest 2017
 
@@ -117,10 +118,10 @@ I've been responsible for technical design of important systems that enabled tea
 
 ## Peer-reviewed Publications
 
- * eDAFX 2020 [K.J. Werner and R. McClellan, Moog Ladder Filter Generalizations Based on State Variable Filters](https://dafx2020.mdw.ac.at/proceedings/papers/DAFx2020_paper_70.pdf)
+ * DAFx20in22 [K.J. Werner, R. McClellan, Time-Varying Filter Stability and State Matrix Products](https://dafx2020.mdw.ac.at/DAFx20in22/index.html#DAFx20in22_pa41)
+ * DAFx20in22 [S. Nercessian, R. McClellan, A. Lukin, A Direct Microdynamics Adjusting Processor with Matching Paradigm and Differentiable Implementation](https://dafx2020.mdw.ac.at/DAFx20in22/index.html#DAFx20in22_pa21)
+ * eDAFx 2020 [K.J. Werner and R. McClellan, Moog Ladder Filter Generalizations Based on State Variable Filters](https://dafx2020.mdw.ac.at/proceedings/papers/DAFx2020_paper_70.pdf)
  * AES 2016 [A. Lukin, R. McClellan, and A. Wishnick, "A Two-Pass Algorithm for Automatic Loudness Correction](https://www.aes.org/e-lib/browse.cfm?elib=18487)
- * To be published in 2022 - K.J. Werner, R. McClellan, Time-Varying Filter Stability and State Matrix Products
- * To be published in 2022 - S. Nercessian, R. McClellan, A. Lukin, A Direct Microdynamics Adjusting Processor with Matching Paradigm and Differentiable Implementation
 
 ## Other Writing
 
