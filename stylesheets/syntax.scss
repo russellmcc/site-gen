@@ -1,101 +1,18 @@
-$base03:          #002b36;
-$base02:          #073642;
-$base01:          #586e75;
-$base00:          #657b83;
-$base0:           #839496;
-$base1:           #93a1a1;
-$base2:           #eee8d5;
-$base3:           #fdf6e3;
-$solar-yellow:    #b58900;
-$solar-orange:    #cb4b16;
-$solar-red:       #dc322f;
-$solar-magenta:   #d33682;
-$solar-violet:    #6c71c4;
-$solar-blue:      #268bd2;
-$solar-cyan:      #2aa198;
-$solar-green:     #859900;
+$pink: rgb(218, 200, 209);
+$bggray: rgb(11,11,11);
+$bgtext: rgb(26,26,30);
 
 pre
 {
-font-family: "Ubuntu Mono";
-background: $base03;
-color: $base1;
+    font-family: "Ubuntu Mono";
+    background: $bggray;
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+    overflow-x: auto;
 }
 
 code
 {
-font-family:"Ubuntu Mono";
+    font-family:"Ubuntu Mono";
+    color: $pink;
 }
-
-.gist-syntax  .c      { color: $base01 !important; font-style: italic ; }                     // Comment 
-.gist-syntax  .cm     { color: $base01 !important; font-style: italic ; }                     // Comment.Multiline 
-.gist-syntax  .cp     { color: $base01 !important; font-style: italic ;  }                     // Comment.Preproc 
-.gist-syntax  .c1     { color: $base01 !important; font-style: italic ; }                     // Comment.Single 
-.gist-syntax  .cs     { color: $base01 !important; font-weight: bold ; font-style: italic ; }   // Comment.Special 
-.gist-syntax  .err    { color: $solar-red !important; background: none ; }                                            // Error 
-.gist-syntax  .k      { color: $solar-orange !important; }                       // Keyword 
-.gist-syntax  .o      { color: $base1 !important; font-weight: bold ; }                       // Operator 
-.gist-syntax  .p      { color: $base1 !important; }                                             // Operator 
-.gist-syntax  .ow     { color: $solar-cyan !important; font-weight: bold ; }                       // Operator.Word 
-
-.gist-syntax  .ge     { color: $base1 !important; font-style: italic ; }                      // Generic.Emph 
-
-.gist-syntax  .gh     { color: $base01 !important; }                                          // Generic.Heading 
-
-.gist-syntax  .gs     { color: $base1 !important; font-weight: bold ; }                                       // Generic.Strong 
-.gist-syntax  .gu     { color: $solar-violet !important; }                                          // Generic.Subheading 
-
-.gist-syntax  .kc     { color: $solar-green !important; font-weight: bold ; }                       // Keyword.Constant 
-.gist-syntax  .kd     { color: $solar-blue !important; }                       // Keyword.Declaration 
-.gist-syntax  .kp     { color: $solar-orange !important; font-weight: bold ; }                       // Keyword.Pseudo 
-.gist-syntax  .kr     { color: $solar-magenta !important; font-weight: bold ; }                       // Keyword.Reserved 
-.gist-syntax  .kt     { color: $solar-cyan !important; }                       // Keyword.Type 
-.gist-syntax  .n      { color: $solar-blue !important; }
-.gist-syntax  .na     { color: $solar-blue !important; }                                          // Name.Attribute 
-.gist-syntax  .nb     { color: $solar-green !important; }                                          // Name.Builtin 
-.gist-syntax  .nc     { color: $solar-magenta !important;}                                                   // Name.Class 
-.gist-syntax  .no     { color: $solar-yellow !important; }                                          // Name.Constant 
-
-.gist-syntax  .nl     { color: $solar-green !important; }
-.gist-syntax  .ne     { color: $solar-blue !important; font-weight: bold ; }                       // Name.Exception 
-.gist-syntax  .nf     { color: $solar-blue !important; font-weight: bold ; }                       // Name.Function 
-.gist-syntax  .nn     { color: $solar-yellow !important; }                                          // Name.Namespace 
-.gist-syntax  .nt     { color: $solar-blue !important; font-weight: bold ; }                                          // Name.Tag 
-.gist-syntax  .nx     { color: $solar-yellow !important; }
-
-
-.gist-syntax  .vg     { color: $solar-blue !important; }                                          // Name.Variable.Global 
-.gist-syntax  .vi     { color: $solar-blue !important; }                                          // Name.Variable.Instance 
-.gist-syntax  .nv     { color: $solar-blue !important; }                                          // Name.Variable 
-
-.gist-syntax  .mf     { color: $solar-cyan !important; }                                          // Literal.Number.Float 
-.gist-syntax  .m      { color: $solar-cyan !important; }                                          // Literal.Number 
-.gist-syntax  .mh     { color: $solar-cyan !important; }                                          // Literal.Number.Hex 
-.gist-syntax  .mi     { color: $solar-cyan !important; }                                          // Literal.Number.Integer 
-
-.gist-syntax  .s      { color: $solar-cyan !important; }                                             // Literal.String 
-
-
-.gist-syntax  .sd     { color: $solar-cyan !important; }                                             // Literal.String.Doc 
-.gist-syntax  .s2     { color: $solar-cyan !important; }                                             // Literal.String.Double 
-.gist-syntax  .se     { color: $solar-red !important; }                                             // Literal.String.Escape 
-
-.gist-syntax  .si     { color: $solar-blue !important; }                                             // Literal.String.Interpol 
-
-.gist-syntax  .sr     { color: $solar-cyan !important; }                                          // Literal.String.Regex 
-.gist-syntax  .s1     { color: $solar-cyan !important; }                                             // Literal.String.Single 
-
-.gist-syntax .kw { color: $solar-yellow !important; font-weight: bold; }
-.gist-syntax .dt { color: $solar-cyan !important; }
-.gist-syntax .dv { color: $base01 !important; }
-.gist-syntax .bn { color: $solar-orange !important; }
-.gist-syntax .fl { color: $solar-cyan !important; }
-.gist-syntax .ch { color: $solar-red !important; }
-.gist-syntax .st { color: $solar-magenta !important; }
-.gist-syntax .co { color: $base01 !important; font-style: italic; }
-.gist-syntax .ot { }
-.gist-syntax .al { color: $solar-green !important; font-weight: bold; }
-.gist-syntax .fu { color: $solar-blue !important; }
-.gist-syntax .re { }
-.gist-syntax .er { color: $solar-red !important; font-weight: bold; }
-

@@ -1,0 +1,51 @@
+---
+layout: post
+title: "aido.el - give chatgpt control of your emacs"
+tags: blog
+score: 3
+teaser:
+img: /images/aido-el-banner.png
+imgalt: banner for aido-el
+---
+
+Have you ever forgotten an emacs command and wish you could just describe it with words?
+
+[[https://github.com/russellmcc/aido.el][aido.el]] is an brand new, irresponsible emacs package to let you do just that!
+
+For example, you can ~M-x aido~ and then type "insert today's date" and then today's date will (usually) be inserted!  Check out the readme for more usage tips.
+
+#+begin_export html
+</div><div class="post">
+#+end_export
+
+In 2023 I've been having fun chatting with large language models like ChatGPT and Bing.  It's been amazing to watch their rapid progress.  One idea I'm especially excited by is giving these language models "super powers" by embedding them in systems that are able to execute the model's commands.  Bing itself is a great example of this; actions like searches and suggestions are controlled by the model.  In [[https://about.sourcegraph.com/blog/cheating-is-all-you-need]["Cheating is all you need"]] Steve Yegge argues that listening for queries and injecting results could be a powerful result for code generation and completion.
+
+In ~aido.el~, we prompt the model to create an org-mode file with a description followed by the code block.  In my testing so far, gpt3.5 based models seem to do better if they are allowed to write a description - think of it as a way for the model to think to itself "out loud".  We then ignore all the description and execute the code block, doing whatever it says!  For example, here's the full output when I ran ~M-x aido~ ~insert today's date~:
+
+
+#+BEGIN_SRC
+Here's an emacs-lisp code block that will insert today's date in the format of "YYYY-MM-DD":
+
+,#+BEGIN_SRC emacs-lisp
+(insert (format-time-string "%Y-%m-%d"))
+,#+END_SRC
+#+END_SRC
+
+#+begin_export html
+</div><div class="post">
+#+end_export
+
+One issue I noticed with early versions of my prompt, is that gpt3.5 based models would often get confused about formatting and put a ~#+begin_src org~ code block _around_ the code block, something like this:
+
+#+begin_src
+  Here's an org-mode document with a code block that will insert today's date in the format of "YYYY-MM-DD":
+
+,#+BEGIN_SRC org
+,#+BEGIN_SRC emacs-lisp
+  (insert (format-time-string "%Y-%m-%d"))
+,#+END_SRC
+,#+END_SRC
+#+end_src
+
+This clearly is not ideal, but it was surprisingly hard to get the model to avoid making this sort of mistake with prompt design.  I wonder if something about the formatting used to encode the chat conversation is confounding the model somehow.  My current fix is to insert a synthetic "reminder" message tagged with the assistant role at the end of the chat log which says "I'll try to help, but no matter what, I won't produce a nested code block. I would never do that. Instead I'll produce a single ~emacs-lisp~ code block."  This sort of "note to self" can be a hint to the model about what the assistant should and should not do and is a good technique to remember when prompting these sort of models.
+
