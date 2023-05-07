@@ -9,20 +9,20 @@ title: Resume
 
 I'm a software developer with a career focus on building innovative products to inspire creativity in customers.  I've contributed to over 20 new software product launches as a developer, tech lead, or architect, including software that has won an [Emmy](https://www.izotope.com/en/company/press/2019/izotope-wins-emmy-rx7-2019.html) and multiple examples of applying deep learning to solve problems never solved before.
 
-I have a pragmatic approach to software development and I believe in using the best tool for the job.  I have a track record of enabling teams to excel technically through mentorship and collaborative system design.
+I have a collaborative and pragmatic approach to software development - I believe in using the best tool for the job.  I have a track record of enabling teams to excel technically through mentorship and collaborative system design.
 
 </div><div class="resume-section">
 
 ## Key Skills
 
- * Professional experience creating software in **C++**, **Typescript**, and **Python**, personal experience with **Rust** and **Haskell**
- * Development and productization of **machine learning** solutions
- * Shaping product strategy from a technical portfolio perspective
+ * Development and productization of **machine learning** solutions, using **pytorch**, **Tensorflow**, and **ONNX**, including edge deployment with **Tensorflow Lite** and custom code
+ * Deep professional experience creating software in **C++20**, **Typescript**, and **Python**, strong personal experience with **Rust** and **Haskell**
  * Guiding teams to continuous improvement of practices and tools such as **codebase design**, **CI/CD**, **automated regression testing**
+ * Signal processing algorithm design and implementation for **audio effects**
  * Designing APIs, systems, and libraries to enable teams to quickly create valuable features
  * Communicating the needs and goals of engineering teams to non-technical stakeholders
- * Signal processing algorithm design and implementation for **audio effects**
- * Developing robust and high quality **cross-platform**, **multi-threaded**, and **soft real-time** software for **Apple** platforms, **Windows**, **embedded Linux**, **bare-metal embedded**, **Linux-based servers** and **containers**, and the **web**
+ * Developing robust and high quality **cross-platform**, **multi-threaded**, and **soft real-time** software
+ * Developing software for **Apple** platforms, **Windows**, **embedded Linux**, **bare-metal embedded**, **Linux-based servers** and **containers**, and the **web**
  * Improving quality and adding new capabilities to large, pre-existing codebases
  * Measuring and improving run-time performance of code
  * Technical leadership for agile product teams
@@ -46,9 +46,11 @@ I have a pragmatic approach to software development and I believe in using the b
 I've been responsible for technical design of important systems that enabled teams to rapidly deliver novel features in cross-platform audio software, including:
 
  * Deep learning driven audio analysis and processing
- * Cloud-delivered signal processing and UI for audio plug-ins
- * Inter-plug-in communication system enabling [features that work across our products](https://www.izotope.com/en/learn/developing-inter-plugin-communication-at-izotope.html)
- * High-framerate audio metering with best-in-market temporal accuracy
+ * Cloud delivery of signal processing and UI code for audio plug-ins
+ * Multithreaded audio analysis engine powering "assistant" features
+ * Protocols and APIs enabling communication between embedded web-based Typescript UIs and real-time audio processing algorithms in C++
+ * Inter-plug-in communication protocols and APIs
+ * High-framerate audio metering engine with best-in-market temporal accuracy
  * Behavioral Analytics reporting, enabling valuable insights about how customers use our products
 
 ### Team Enablement
@@ -58,7 +60,7 @@ I've been responsible for technical design of important systems that enabled tea
    - Automated C++ refactoring
    - C++ static analysis and C++ runtime sanitizers in CI
    - Automated statistical analysis and regression testing of runtime performance in CI
-   - Python bindings to allow faster development of integration-level testing
+   - Python bindings for plug-ins to allow faster development of integration-level testing
  * Lead the "DSP Chapter", a group of technical contributors responsible for the Signal Processing components of our codebase.
  * Previously led the "FAST Chapter", a group dedicated to improving the run-time performance of our codebase.
 
@@ -69,7 +71,7 @@ I've been responsible for technical design of important systems that enabled tea
 ### Product Strategy
 
  * Acted as the technical voice in cross-functional "Product Strategy Taskforce" responsible for setting product direction for iZotope's music-focused products
- * Participated as the technical member of a cross-functional discovery and prototyping team, leading to a new design direction for our assitantive features, enabling improvements across our product line.
+ * Participated as the technical member of a cross-functional discovery and prototyping team, leading to a new design direction for our assiive features, enabling improvements across our product line.
 
 <hr></hr>
 

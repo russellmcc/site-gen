@@ -2,27 +2,27 @@
 
 Somerville, Massachusetts 02144
 
-web: [russellmcc.com](https://www.russellmcc.com)
+web: [russellmcc.com/resume](https://www.russellmcc.com/resume)
 
 email: [russell.mcclellan@gmail.com](mailto:russell.mcclellan@gmail.com)
 
 
 ## **Summary**
 
-I'm a software developer with a career focus on building innovative products to inspire creativity in customers.  I've contributed to over 20 new software product launches as a developer, tech lead, or architect, including software that has won an [Emmy](https://www.izotope.com/en/company/press/2019/izotope-wins-emmy-rx7-2019.html).
+I'm a software developer with a career focus on building innovative products to inspire creativity in customers.  I've contributed to over 20 new software product launches as a developer, tech lead, or architect, including software that has won an Emmy and software that applies deep learning to solve problems never solved before.
 
-I have a pragmatic approach to software development and I believe in using the best tool for the job.  I have a track record of enabling teams to excel technically through mentorship and collaborative system design.
+I have a collaborative, pragmatic approach to software development - I believe in using the best tool for the job.  I have a track record of enabling teams to excel technically through mentorship and collaborative system design.
 
 ## **Key Skills**
 
- * Professional experience creating software in **C++**, **Typescript**, and **Python**, personal experience with **Rust** and **Haskell**
- * Development and productization of **machine learning** solutions
- * Shaping product strategy from a technical portfolio perspective
+ * Development and productization of **machine learning** solutions, using **pytorch**, **Tensorflow** and **ONNX**, including edge deployment with **Tensorflow Lite** and custom code
+ * Deep professional experience creating software in **C++20**, **Typescript**, and **Python**, strong personal experience with **Rust** and **Haskell**
  * Guiding teams to continuous improvement of practices and tools such as **codebase design**, **CI/CD**, **automated regression testing**
+ * Signal processing algorithm design and implementation for **audio effects**
  * Designing APIs, systems, and libraries to enable teams to quickly create valuable features
  * Communicating the needs and goals of engineering teams to non-technical stakeholders
- * Signal processing algorithm design and implementation for **audio effects**
- * Developing robust and high quality **cross-platform**, **multi-threaded**, and **soft real-time** software for **Apple** platforms, **Windows**, **embedded Linux**, **bare-metal embedded**, **Linux-based servers** and **containers**, and the **web**
+ * Developing robust and high quality **cross-platform**, **multi-threaded**, and **soft real-time** software
+ * Developing software for **Apple** platforms, **Windows**, **embedded Linux**, **bare-metal embedded**, **Linux-based servers** and **containers**, and the **web**
  * Improving quality and adding new capabilities to large, pre-existing codebases
  * Measuring and improving run-time performance of code
  * Technical leadership for agile product teams
@@ -36,31 +36,34 @@ I have a pragmatic approach to software development and I believe in using the b
 iZotope, Inc., Cambridge, Massachusetts
 
 \
-Technical System Design
+**Technical System Design**
 
 \
 I've been responsible for technical design of important systems that enabled teams to rapidly deliver novel features in cross-platform audio software, including:
 
  * Deep learning driven audio analysis and processing
- * Cloud-delivered signal processing and UI for audio plug-ins
- * Inter-plug-in communication system enabling [features that work across our products](https://www.izotope.com/en/learn/developing-inter-plugin-communication-at-izotope.html)
- * High-framerate audio metering with best-in-market temporal accuracy
+ * Cloud delivery of signal processing and UI code for audio plug-ins
+ * Multithreaded audio analysis engine powering "assistant" features
+ * Protocols and APIs enabling communication between embedded web-based Typescript UIs and real-time audio processing algorithms in C++
+ * Inter-plug-in communication protocols and APIs
+ * High-framerate audio metering engine with best-in-market temporal accuracy
  * Behavioral Analytics reporting, enabling valuable insights about how customers use our products
 
-Product Strategy
-
- * Acted as the technical voice in cross-functional "Product Strategy Taskforce" responsible for setting stratgic pillars for iZotope's music-focused products
- * Participated as the technical member of a cross-functional discovery and prototyping team, leading to a new design direction for our assitantive features, enabling improvements across our product line.
-
-Team Enablement
+\pagebreak
+**Team Enablement**
 
  * Provided frequent mentoring and technical guidance across all levels of the engineering team.
  * Introduced or created developer productivity tools to the company, including automated C++ refactoring, static analysis and runtime sanitizers in CI, automated statistical analysis and regression testing of runtime performance in CI, and Python bindings to allow faster development of integration-level testing
  * Acted as technical product owner of the "DSP Chapter", a working group of cross-team engineers dedicated to improving signal processing codebase
 
- Signal Processing
+ **Signal Processing**
 
  * Invented and co-invented numerous innovations in signal processing, enabling first-to-market product features
+
+ **Product Strategy**
+
+ * Acted as the technical voice in cross-functional "Product Strategy Taskforce" responsible for setting stratgic pillars for iZotope's music-focused products
+ * Participated as the technical member of a cross-functional discovery and prototyping team, leading to a new design direction for our assitive features, enabling improvements across our product line.
 
 ~2009-2014~ Software Developer, Mark of the Unicorn, Cambridge, Massachusetts
 
@@ -80,18 +83,9 @@ Team Enablement
  * US Patent 10,972,065 [Systems and Methods for identifying and remediating sound masking](https://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO2&Sect2=HITOFF&p=1&u=%2Fnetahtml%2FPTO%2Fsearch-bool.html&r=2&f=G&l=50&co1=AND&d=PTXT&s1=%22izotope,+inc%22&OS=%22izotope,+inc%22&RS=%22izotope,+inc%22)
  * US Patent 10,635,389 [Systems and methods for automatically generating enhanced audio output](https://patft.uspto.gov/netacgi/nph-Parser?Sect1=PTO1&Sect2=HITOFF&p=1&u=/netahtml/PTO/srchnum.html&r=1&f=G&l=50&d=PALL&s1=10635389.PN.)
  * [A Practical Perspective on Deep Learning in Audio Software](https://www.youtube.com/watch?v=fGuT9zoQ_JA) Audio Developer Conference 2019
- * eDAFX 2020 [K.J. Werner and R. McClellan, Moog Ladder Filter Generalizations Based on State Variable Filters](https://dafx2020.mdw.ac.at/proceedings/papers/DAFx2020_paper_70.pdf)
- * [Developing Inter-plugin Communication at iZotope](https://www.izotope.com/en/learn/developing-inter-plugin-communication-at-izotope.html)
- * [Engineering a Career Outside of Management](https://www.builtinboston.com/2022/01/11/engineering-career-outside-management?utm_source=press_kit&utm_medium=social_media&utm_campaign=nuance) - an interview on navigating career growth as an individual contributor
- * [Lo-Fi, a hip-hop story](https://www.izotope.com/en/learn/lo-fi-a-hip-hop-story.html) - an interview with a collaborator about the creation of a new signal processing feature
-
-## **Classes And Certificates**
- * [Certified Scrum Product Owner](https://bcert.me/sjbetavqp) (Issued 2021)
- * Test-Driven-Development Training from [Rob Myers](https://agileforall.com/author/rmyers/) (2014)
- * Audio Signal Processing for Music applications - Coursera
- * Statistical Mechanics: Algorithms and Computations - Coursera
- * Principles of Reactive Programming - Coursera (With Distinction)
- * Machine Learning - `ml-class.org` (100%)
+ * [Case Study: Eliminating C++ Undefined Behavior, Plug-in Contract Violation, Intel Assumptions in a Legacy Codebase](https://www.youtube.com/watch?v=pjsogsnta4o) Audio Developer Conference 2022
+ * DAFx20in22 [K.J. Werner, R. McClellan, Time-Varying Filter Stability and State Matrix Products](https://dafx2020.mdw.ac.at/DAFx20in22/index.html#DAFx20in22_pa41)
+ * DAFx20in22 [S. Nercessian, R. McClellan, A. Lukin, A Direct Microdynamics Adjusting Processor with Matching Paradigm and Differentiable Implementation](https://dafx2020.mdw.ac.at/DAFx20in22/index.html#DAFx20in22_pa21)
 
 ## **More information**
 
