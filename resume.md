@@ -136,7 +136,6 @@ I've been responsible for technical design of important systems that enabled tea
 </div><div class="resume-section">
 
 ## Classes And Certificates
- * [Certified Scrum Product Owner](https://bcert.me/sjbetavqp) (Issued 2021)
  * Test-Driven-Development Training from [Rob Myers](https://agileforall.com/author/rmyers/) (2014)
  * Audio Signal Processing for Music applications - Coursera
  * Statistical Mechanics: Algorithms and Computations - Coursera
