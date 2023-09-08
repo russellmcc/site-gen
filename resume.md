@@ -32,7 +32,7 @@ I have a collaborative and pragmatic approach to software development - I believ
 
 ## Work Experience
 
-2016-
+2016-2023
  ~ Principal Software Engineer
 
 2014-2016
