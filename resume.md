@@ -120,6 +120,7 @@ I've been responsible for technical design of important systems that enabled tea
 
 ## Peer-reviewed Publications
 
+ * DAFx23 [S. Nercessian, R. McClellan, C. Goldsmith, A. Fink, N. LaPenn, Real-time Singing Voice Conversion Plug-in](https://dafx23.create.aau.dk/wp-content/uploads/2023/09/DAFX23_Proceedings.pdf)
  * DAFx20in22 [K.J. Werner, R. McClellan, Time-Varying Filter Stability and State Matrix Products](https://dafx2020.mdw.ac.at/DAFx20in22/index.html#DAFx20in22_pa41)
  * DAFx20in22 [S. Nercessian, R. McClellan, A. Lukin, A Direct Microdynamics Adjusting Processor with Matching Paradigm and Differentiable Implementation](https://dafx2020.mdw.ac.at/DAFx20in22/index.html#DAFx20in22_pa21)
  * eDAFx 2020 [K.J. Werner and R. McClellan, Moog Ladder Filter Generalizations Based on State Variable Filters](https://dafx2020.mdw.ac.at/proceedings/papers/DAFx2020_paper_70.pdf)
