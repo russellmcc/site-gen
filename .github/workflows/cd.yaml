@@ -19,11 +19,11 @@ jobs:
 
     - name: 🔑 Cache Key
       id: cache_key
-      run: echo ::set-output name=key::$(md5sum stack.yaml | awk '{print $1}')
+      run: echo "key=$(md5sum stack.yaml | awk '{print $1}')" >> "$GITHUB_OUTPUT"
 
     - name: 💾 Cache Dependencies
       id: cache
-      uses: actions/cache@v1
+      uses: actions/cache@v4
       with:
         path: ~/.stack
         key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
@@ -31,7 +31,7 @@ jobs:
     - name: 🏷️ Variables
       id: variables
       run: |
-        echo ::set-output name=pkg_name::$(cat *.cabal | grep "name:" | sed "s/name:\s*\(.*\)/\1/")
+        echo "pkg_name=$(sed -n 's/^name:[[:space:]]*//p' *.cabal)" >> "$GITHUB_OUTPUT"
 
     - name: 🔨 Build
       run: |
